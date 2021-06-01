@@ -23,8 +23,8 @@ export class EventsGuardGuard implements CanActivate {
     if (sessionStorage.getItem("user")) {
       return true;
     } else {
-      let url: Router;
-      url.navigate(["login"]);
+      console.log(route);
+      // url.navigate(["login"]);
       return false;
     }
   }

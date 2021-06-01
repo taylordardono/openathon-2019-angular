@@ -1,20 +1,25 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
 import { UserDataService } from "../core/user-data.service";
 import { validationMessages } from "../../environments/environment";
 import { initializeUser } from "../models/user";
+import { animationTask } from "../shared/animations/animations";
 
 @Component({
   selector: "oevents-login",
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.scss"],
+  animations: [animationTask],
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  route: Router;
   loginFormErr: Object = {};
   userService: UserDataService;
   unSuccessLogin: boolean = false;
-  constructor(userData: UserDataService) {
+  constructor(route: Router, userData: UserDataService) {
+    this.route = route;
     this.userService = userData;
     this.loginFormErr = initializeUser();
     this.loginForm = new FormGroup({
@@ -59,14 +64,22 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  userLogin() {
+  async userLogin() {
     if (!this.loginForm) {
       return;
     }
-    this.userService.logIn({
-      name: this.loginForm.get("name").value,
-      password: this.loginForm.get("password").value,
-    });
+    try {
+      const success = await this.userService.logIn({
+        name: this.loginForm.get("name").value,
+        password: this.loginForm.get("password").value,
+      });
+      this.route.navigate(["/events", "add-event"]);
+    } catch (error) {
+      this.unSuccessLogin = true;
+      // this.loginForm.get("password").setValue("");
+      // this.loginForm.get("password").markAsPristine();
+      // this.loginForm.get("password").markAsUntouched();
+    }
   }
 
   ngOnInit() {}

@@ -1,33 +1,81 @@
 /* You can add global styles to this file, and also import other style files */
 @import "@angular/material/prebuilt-themes/indigo-pink.css";
+@import "./app/shared/styles/fonts.scss";
+@import "./app/shared/styles/colors.scss";
+@import "./app/shared/styles/variables.scss";
 
 * {
   box-sizing: border-box;
 }
 
+body,
+html,
+div {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+}
+
+.section-title {
+  color: $acn-green;
+  font-weight: 900;
+  font-size: 3rem;
+  // max-width: 300px;
+
+  h1 {
+    margin: 0 0;
+  }
+}
+
+a {
+  cursor: pointer;
+  color: black;
+  text-decoration: none;
+
+  &:hover {
+    color: $acn-green;
+  }
+}
+
+mat-toolbar[data-menu] {
+  background-color: $black;
+  color: $gray-white;
+}
+
 .activeLink {
-  color: #f95151;
+  color: $acn-green;
+}
+.ng-star-inserted {
+  flex-grow: 1;
 }
 
-.main__container {
-  position: relative;
-  padding: 0px 20px;
-  width: 100%;
-}
-
-form {
+.form__wrapper {
+  background-color: rgba($color: $gray-white, $alpha: 1);
+  border-radius: 9px;
+  padding: 1rem 1rem;
   margin-left: auto;
   margin-right: auto;
   width: 50%;
+  max-width: 300px;
+  form {
+    width: 100%;
+    mat-form-field {
+      display: block;
+      padding: 10px 0px;
+    }
+  }
 }
 
-mat-form-field {
-  display: block !important;
-  padding: 10px 0px !important;
-}
-
-h4 {
-  width: max-content;
+button[mat-raised-button] {
   margin-left: auto;
-  margin-right: auto;
+  display: block;
+  background-color: rgba($color: $acn-green, $alpha: 1);
+  color: rgba($color: $gray-white, $alpha: 1);
 }
