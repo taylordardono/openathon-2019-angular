@@ -73,17 +73,24 @@ export class UserDataService {
         .pipe(
           retry(3),
           map((us: Array<User>) => {
-            if (us.length > 0) {
+            //We check if the current user is registered by selecting the last one of the
+            //users array
+            if (
+              us.length > 0 &&
+              us[us.length - 1].password ===
+                credentials.get("password").value &&
+              us[us.length - 1].name === credentials.get("name").value
+            ) {
               sessionStorage.setItem(
                 "user",
-                JSON.stringify({ user: us[0].name, id: us[0].id })
+                JSON.stringify({
+                  user: us[us.length - 1].name,
+                  id: us[us.length - 1].id,
+                })
               );
-              return us[us.length - 1].password ===
-                credentials.get("password").value &&
-                us[us.length - 1].name === credentials.get("name").value
-                ? us[us.length - 1]
-                : "Password not valid.";
+              return us[us.length - 1];
             }
+            return "User not registered";
           })
         )
         .subscribe((d) => {
@@ -96,9 +103,12 @@ export class UserDataService {
         });
     });
   }
+
   logOut() {
     localStorage.removeItem("user");
+    this.route.navigate(["/home"]);
   }
+
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
