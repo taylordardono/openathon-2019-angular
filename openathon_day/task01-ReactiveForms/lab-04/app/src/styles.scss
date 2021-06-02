@@ -34,7 +34,7 @@ div {
   }
 }
 
-a {
+a:not(p>a) {
   cursor: pointer;
   color: black;
   text-decoration: none;
@@ -61,7 +61,8 @@ mat-icon[data-copyright]{
 .activeLink {
   color: $acn-green;
 }
-.ng-star-inserted {
+
+router-outlet+* {
   flex-grow: 1;
 }
 
@@ -112,4 +113,11 @@ button[mat-raised-button] {
   right: 0;
   color: $gray-white;
   margin: 0;
+  a{
+    color: rgba($color: $black, $alpha: 1);
+    text-decoration: none;
+    &:hover{
+      text-decoration: underline;
+    }
+  }
 }
