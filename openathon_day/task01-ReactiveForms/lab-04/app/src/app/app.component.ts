@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { UserDataService } from "./core/user-data.service";
 
 @Component({
   selector: "oevents-root",
@@ -6,7 +7,11 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./app.component.scss"],
 })
 export class AppComponent implements OnInit {
-  constructor() {}
+  constructor(private userService: UserDataService) {}
   title = "open-events-front";
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (sessionStorage.getItem("user")) {
+      this.userService.isAuthenticated = true;
+    }
+  }
 }

@@ -47,14 +47,15 @@ a {
 mat-toolbar[data-menu] {
   background-color: $black;
   color: $gray-white;
-  &:last-child {
-    margin-left: auto;
-  }
 }
 
 mat-card {
   background-color: rgba(247, 211, 211, 0.8);
   color: red;
+}
+
+mat-icon[data-copyright]{
+  font-size: 1rem;
 }
 
 .activeLink {
@@ -103,4 +104,12 @@ button[mat-raised-button] {
   display: block;
   background-color: rgba($color: $acn-green, $alpha: 1);
   color: rgba($color: $gray-white, $alpha: 1);
+}
+
+.copyright {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  color: $gray-white;
+  margin: 0;
 }

@@ -28,7 +28,7 @@ const routes: Routes = [
     component: EventDetailsComponent,
     canActivate: [EventsGuardGuard],
   },
-  { path: "profile", component: ProfileComponent },
+  { path: "profile", component: ProfileComponent, canActivate: [EventsGuardGuard] },
   { path: "login", component: LoginComponent },
   { path: "signup", component: SignupComponent },
 

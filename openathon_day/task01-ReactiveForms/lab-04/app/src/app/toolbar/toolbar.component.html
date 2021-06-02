@@ -13,7 +13,10 @@
       <span>Check events list</span>
     </a>
   </mat-menu>
-  <a mat-button routerLink="/profile" routerLinkActive="activeLink">Profile</a>
-  <a mat-button routerLink="/login" routerLinkActive="activeLink">Login</a>
-  <a mat-button data-sign routerLink="/signup" routerLinkActive="activeLink">Sign Up</a>
+  <a mat-button *ngIf="userService.isAuthenticated" routerLink="/profile" routerLinkActive="activeLink">Profile</a>
+  <div class="credential__section">
+    <a mat-button *ngIf="!userService.isAuthenticated" routerLink="/login" routerLinkActive="activeLink">Login</a>
+    <a mat-button *ngIf="userService.isAuthenticated" (click)="logOut()">Logout</a>
+    <a mat-button data-sign routerLink="/signup" routerLinkActive="activeLink">Sign Up</a>
+  </div>
 </mat-toolbar>

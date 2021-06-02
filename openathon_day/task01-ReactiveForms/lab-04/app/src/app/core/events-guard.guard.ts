@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Router } from "@angular/router";
+import { UserDataService } from "../core/user-data.service";
 import {
   ActivatedRouteSnapshot,
   CanActivate,
@@ -12,6 +12,7 @@ import { Observable } from "rxjs";
   providedIn: "root",
 })
 export class EventsGuardGuard implements CanActivate {
+  constructor(private userService: UserDataService) {}
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -20,12 +21,9 @@ export class EventsGuardGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (sessionStorage.getItem("user")) {
+    if (this.userService.isAuthenticated) {
       return true;
-    } else {
-      console.log(route);
-      // url.navigate(["login"]);
-      return false;
     }
+    return false;
   }
 }

@@ -1,6 +1,7 @@
 @import "../shared/styles/variables.scss";
 
-.main__container{
-    @include container();
-    @include background("../../assets/images/patt4.png", center, contain)
+.main__container {
+  @include container();
+  @include background("../../assets/images/joel-filipe-Wc8k-KryEPM-unsplash.jpg", center, cover);
+  position: relative;
 }

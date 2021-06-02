@@ -18,14 +18,8 @@ export const headers = new HttpHeaders({
   providedIn: "root",
 })
 export class UserDataService {
-  userArray: User[] = new Array();
-  http: HttpClient;
-  route: Router;
-  constructor(http: HttpClient, route: Router) {
-    this.http = http;
-    this.route = route;
-    console.log(this.route);
-  }
+  public isAuthenticated: boolean;
+  constructor(private http: HttpClient, private route: Router) {}
 
   logIn(user): Promise<boolean> {
     const url =
@@ -55,6 +49,7 @@ export class UserDataService {
         .subscribe((d) => {
           console.log(d);
           if (d) {
+            this.isAuthenticated = true;
             resolve(true);
           } else {
             reject(false);
@@ -106,6 +101,7 @@ export class UserDataService {
 
   logOut() {
     localStorage.removeItem("user");
+    this.isAuthenticated = false;
     this.route.navigate(["/home"]);
   }
 
