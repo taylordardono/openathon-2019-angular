@@ -17,6 +17,6 @@
   <div class="credential__section">
     <a mat-button *ngIf="!userService.isAuthenticated" routerLink="/login" routerLinkActive="activeLink">Login</a>
     <a mat-button *ngIf="userService.isAuthenticated" (click)="logOut()">Logout</a>
-    <a mat-button data-sign routerLink="/signup" routerLinkActive="activeLink">Sign Up</a>
+    <a mat-button *ngIf="!userService.isAuthenticated" data-sign routerLink="/signup" routerLinkActive="activeLink">Sign Up</a>
   </div>
 </mat-toolbar>

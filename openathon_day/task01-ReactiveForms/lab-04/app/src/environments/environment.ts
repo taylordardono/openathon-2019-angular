@@ -10,6 +10,7 @@ export const environment = {
 export const validationMessages = {
   required: "The field is required",
   length: "The length is not valid",
+  passwordNotMatch: "The password dont match"
 };
 /*
  * For easier debugging in development mode, you can import the following file

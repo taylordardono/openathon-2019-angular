@@ -3,16 +3,17 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { UserDataService } from "../../core/user-data.service";
 import { validationMessages } from "../../../environments/environment";
-import { initializeUser } from "../../models/user";
 import { animationTask } from "../../shared/animations/animations";
 import { Subscription } from "rxjs";
 import { initializeProfile, Profile } from "src/app/models/profile";
+import { PasswordValidatorDirective } from "src/app/directives/password-validator.directive";
 
 @Component({
   selector: "oevents-signup",
   templateUrl: "./signup.component.html",
   styleUrls: ["./signup.component.scss"],
   animations: [animationTask],
+  providers: [PasswordValidatorDirective],
 })
 export class SignupComponent implements OnInit, OnDestroy {
   unSuccessSignUp: boolean;
@@ -21,17 +22,23 @@ export class SignupComponent implements OnInit, OnDestroy {
   signUpForm: FormGroup;
   formChanges: Subscription;
   signUpFormErr: Profile;
-  constructor(private route: Router, private userService: UserDataService) {
+  constructor(
+    private passValidator: PasswordValidatorDirective,
+    private route: Router,
+    private userService: UserDataService
+  ) {
     this.signUpFormErr = initializeProfile();
     this.signUpForm = new FormGroup({
       name: new FormControl("", Validators.required),
       password: new FormControl("", [
         Validators.required,
         Validators.minLength(8),
+        this.passValidator.passwordSave,
+        this.passValidator.validate,
       ]),
-      passwordConfirm: new FormControl("", [
+      passwordNotMatch: new FormControl("", [
         Validators.required,
-        Validators.minLength(8),
+        this.passValidator.validate,
       ]),
     });
     this.formChanges = this.signUpForm.valueChanges.subscribe((data) => {
@@ -50,7 +57,11 @@ export class SignupComponent implements OnInit, OnDestroy {
       //try catch method until we decide what we should do with the date property
       this.signUpFormErr[field] = "";
       const control = form.get(field);
-      if (control && control.touched && !control.valid) {
+      if (
+        control &&
+        control.touched &&
+        (!control.valid || form.hasError(field))
+      ) {
         for (const key in validationMessages) {
           let completeKey: string = String(key);
           let success: boolean = true;

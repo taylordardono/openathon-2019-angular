@@ -44,7 +44,7 @@
         <mat-icon data-show-password (click)="showPassword()">{{iconShow}}</mat-icon>
         <mat-form-field
           [hintLabel]="
-            signUpForm.get('passwordConfirm').pristine ? 'Confirm password' : ''
+            signUpForm.get('passwordNotMatch').pristine ? 'Confirm password' : ''
           "
           appearance="fill"
         >
@@ -52,11 +52,11 @@
           <input
             type="password"
             matInput
-            formControlName="passwordConfirm"
+            formControlName="passwordNotMatch"
             placeholder="Confirm password"
           />
-          <mat-error *ngIf="signUpFormErr['passwordConfirm']">{{
-            signUpFormErr["password"]
+          <mat-error *ngIf="signUpFormErr['passwordNotMatch']">{{
+            signUpFormErr["passwordNotMatch"]
           }}</mat-error>
         </mat-form-field>
       </div>

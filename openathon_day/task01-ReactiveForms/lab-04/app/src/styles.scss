@@ -8,6 +8,7 @@
   box-sizing: border-box;
 }
 
+/*Generic setup*/
 body,
 html,
 div {
@@ -23,17 +24,33 @@ div {
   width: 100vw;
 }
 
+router-outlet+* {
+  flex-grow: 1;
+}
+
+/*Material custom styles*/
+mat-toolbar[data-menu] {
+  background-color: $black;
+  color: $gray-white;
+}
+
+
+mat-icon[data-copyright]{
+  font-size: 1rem;
+}
+
+/*Generic styles*/
 .section-title {
   color: $acn-green;
   font-weight: 900;
   font-size: 2rem;
   // max-width: 300px;
-
   h1 {
     margin: 0 0;
   }
 }
 
+//Toolbar links, not image copyright
 a:not(p>a) {
   cursor: pointer;
   color: black;
@@ -44,26 +61,15 @@ a:not(p>a) {
   }
 }
 
-mat-toolbar[data-menu] {
-  background-color: $black;
-  color: $gray-white;
-}
-
-mat-card {
-  background-color: rgba(247, 211, 211, 0.8);
-  color: red;
-}
-
-mat-icon[data-copyright]{
-  font-size: 1rem;
-}
 
 .activeLink {
   color: $acn-green;
 }
 
-router-outlet+* {
-  flex-grow: 1;
+.sign__info {
+  user-select: none;
+  opacity: 0;
+  transition: opacity ease-in 0.3s;
 }
 
 .form__wrapper {
@@ -73,6 +79,7 @@ router-outlet+* {
   margin-left: auto;
   margin-right: auto;
   width: 50%;
+  //sign up formulary has different structure
   &:not([data-sign-form]){
     max-width: 300px;
     form {
@@ -89,17 +96,17 @@ router-outlet+* {
       width: 100%;
     }
   }
+  mat-card {
+    background-color: rgba(247, 211, 211, 0.8);
+    color: red;
+  }
 }
 
-.sign__info {
-  user-select: none;
-  opacity: 0;
-  transition: opacity ease-in 0.3s;
-}
 .unsuccess__sign {
   opacity: 1;
 }
 
+//Sign type button
 button[mat-raised-button] {
   margin-left: auto;
   display: block;

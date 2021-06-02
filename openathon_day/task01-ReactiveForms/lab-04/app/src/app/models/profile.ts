@@ -1,7 +1,7 @@
 export interface Profile {
   readonly name: string;
   password: string;
-  passwordConfirm: string;
+  passwordNotMatch: string;
   readonly id: string;
 }
 
@@ -9,7 +9,7 @@ export function initializeProfile(): Profile {
   let newProfile: Profile = {
     name: "",
     password: "",
-    passwordConfirm: "",
+    passwordNotMatch: "",
     id: "",
   };
   return newProfile;

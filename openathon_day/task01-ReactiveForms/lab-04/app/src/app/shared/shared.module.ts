@@ -11,9 +11,9 @@ import { MatMenuModule } from "@angular/material/menu";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { ReactiveFormsModule } from "@angular/forms";
-
+import { PasswordValidatorDirective } from '../directives/password-validator.directive';
 @NgModule({
-  declarations: [],
+  declarations: [PasswordValidatorDirective],
   imports: [
     BrowserAnimationsModule,
     MatToolbarModule,

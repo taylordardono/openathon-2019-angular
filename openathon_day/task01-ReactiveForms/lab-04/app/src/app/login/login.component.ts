@@ -34,7 +34,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (!this.loginForm) {
       return;
     }
-    this.unSuccessLogin = false;
     const form = this.loginForm;
     for (const field in this.loginFormErr) {
       //We are not using date property, wich is a Date type object, so, we will use
@@ -68,6 +67,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (!this.loginForm) {
       return;
     }
+    this.unSuccessLogin = false;
     try {
       const success = await this.userService.logIn({
         name: this.loginForm.get("name").value,
@@ -76,9 +76,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.route.navigate(["/events", "add-event"]);
     } catch (error) {
       this.unSuccessLogin = true;
-      // this.loginForm.get("password").setValue("");
-      // this.loginForm.get("password").markAsPristine();
-      // this.loginForm.get("password").markAsUntouched();
+      this.loginForm.get("password").reset("");
     }
   }
 

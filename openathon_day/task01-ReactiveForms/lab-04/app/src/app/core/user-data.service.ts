@@ -100,7 +100,7 @@ export class UserDataService {
   }
 
   logOut() {
-    localStorage.removeItem("user");
+    sessionStorage.removeItem("user");
     this.isAuthenticated = false;
     this.route.navigate(["/home"]);
   }
