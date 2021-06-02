@@ -7,7 +7,7 @@ import {
 } from "@angular/common/http";
 import { throwError } from "rxjs";
 import { catchError, retry, map, filter } from "rxjs/operators";
-import { User } from "../models/user";
+import { initializeUser, User } from "../models/user";
 import { environment } from "../../environments/environment";
 
 //common headers for user actions on the webpage
@@ -26,6 +26,7 @@ export class UserDataService {
     this.route = route;
     console.log(this.route);
   }
+
   logIn(user): Promise<boolean> {
     const url =
       environment.apiURL +
@@ -33,32 +34,66 @@ export class UserDataService {
       user.name +
       "&password=" +
       user.password;
-    console.log(url);  
-    return new Promise((resolve, reject) =>{
+    console.log(url);
+    return new Promise((resolve, reject) => {
       this.http
-      .get(url, { headers })
-      .pipe(
-        retry(3),
-        map((us: Array<User>) => {
-          if (us.length > 0) {
-            sessionStorage.setItem(
-              "user",
-              JSON.stringify({ user: us[0].name, id: us[0].id })
-            );
-            return us[0].password === user.password
-              ? us[0]
-              : "Password not valid.";
+        .get(url, { headers })
+        .pipe(
+          retry(3),
+          map((us: Array<User>) => {
+            if (us.length > 0) {
+              sessionStorage.setItem(
+                "user",
+                JSON.stringify({ user: us[0].name, id: us[0].id })
+              );
+              return us[0].password === user.password
+                ? us[0]
+                : "Password not valid.";
+            }
+          })
+        )
+        .subscribe((d) => {
+          console.log(d);
+          if (d) {
+            resolve(true);
+          } else {
+            reject(false);
           }
-        })
-      )
-      .subscribe((d) => {
-        console.log(d);
-        if (d) {
-          resolve(true)
-        } else{
-          reject(false);
-        }
-      });
+        });
+    });
+  }
+
+  signUp(credentials): Promise<boolean> {
+    const url = environment.apiURL + "users";
+    console.log(url);
+    const newUser: User = initializeUser(credentials);
+    return new Promise((resolve, reject) => {
+      this.http
+        .post(url, newUser, { headers })
+        .pipe(
+          retry(3),
+          map((us: Array<User>) => {
+            if (us.length > 0) {
+              sessionStorage.setItem(
+                "user",
+                JSON.stringify({ user: us[0].name, id: us[0].id })
+              );
+              return us[us.length - 1].password ===
+                credentials.get("password").value &&
+                us[us.length - 1].name === credentials.get("name").value
+                ? us[us.length - 1]
+                : "Password not valid.";
+            }
+          })
+        )
+        .subscribe((d) => {
+          console.log(d);
+          if (d) {
+            resolve(true);
+          } else {
+            reject(false);
+          }
+        });
     });
   }
   logOut() {

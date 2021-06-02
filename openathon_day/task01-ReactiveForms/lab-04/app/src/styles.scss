@@ -26,7 +26,7 @@ div {
 .section-title {
   color: $acn-green;
   font-weight: 900;
-  font-size: 3rem;
+  font-size: 2rem;
   // max-width: 300px;
 
   h1 {
@@ -47,6 +47,14 @@ a {
 mat-toolbar[data-menu] {
   background-color: $black;
   color: $gray-white;
+  &:last-child {
+    margin-left: auto;
+  }
+}
+
+mat-card {
+  background-color: rgba(247, 211, 211, 0.8);
+  color: red;
 }
 
 .activeLink {
@@ -63,14 +71,31 @@ mat-toolbar[data-menu] {
   margin-left: auto;
   margin-right: auto;
   width: 50%;
-  max-width: 300px;
-  form {
-    width: 100%;
-    mat-form-field {
-      display: block;
-      padding: 10px 0px;
+  &:not([data-sign-form]){
+    max-width: 300px;
+    form {
+      width: 100%;
+      mat-form-field {
+        display: block;
+        padding: 10px 0px;
+      }
     }
   }
+  &[data-sign-form]{
+    max-width: fit-content;
+    form {
+      width: 100%;
+    }
+  }
+}
+
+.sign__info {
+  user-select: none;
+  opacity: 0;
+  transition: opacity ease-in 0.3s;
+}
+.unsuccess__sign {
+  opacity: 1;
 }
 
 button[mat-raised-button] {

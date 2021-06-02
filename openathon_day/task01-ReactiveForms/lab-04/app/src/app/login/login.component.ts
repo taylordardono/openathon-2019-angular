@@ -1,10 +1,11 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { UserDataService } from "../core/user-data.service";
 import { validationMessages } from "../../environments/environment";
 import { initializeUser } from "../models/user";
 import { animationTask } from "../shared/animations/animations";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "oevents-login",
@@ -12,25 +13,24 @@ import { animationTask } from "../shared/animations/animations";
   styleUrls: ["./login.component.scss"],
   animations: [animationTask],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
-  route: Router;
   loginFormErr: Object = {};
-  userService: UserDataService;
   unSuccessLogin: boolean = false;
-  constructor(route: Router, userData: UserDataService) {
-    this.route = route;
-    this.userService = userData;
+  formChanges: Subscription;
+  constructor(private route: Router, private userService: UserDataService) {
     this.loginFormErr = initializeUser();
     this.loginForm = new FormGroup({
       name: new FormControl("", Validators.required),
       password: new FormControl("", Validators.required),
     });
-    this.loginForm.valueChanges.subscribe((data) => this.onValueChanged(data));
+    this.formChanges = this.loginForm.valueChanges.subscribe((data) =>
+      this.onValueChanged(data)
+    );
     console.log(this.loginFormErr);
   }
 
-  onValueChanged(changes?: any) {
+  private onValueChanged(changes?: any) {
     if (!this.loginForm) {
       return;
     }
@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  async userLogin() {
+  public async userLogin() {
     if (!this.loginForm) {
       return;
     }
@@ -83,4 +83,11 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {}
+
+  ngOnDestroy() {
+    //Avoid the memory leak from the valueChanges of the form
+    if (this.formChanges) {
+      this.formChanges.unsubscribe();
+    }
+  }
 }

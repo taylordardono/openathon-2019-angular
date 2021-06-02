@@ -9,6 +9,7 @@ import { PageNotFoundComponent } from "./page-not-found/page-not-found.component
 import { AddEditFormComponent } from "./events/add-edit-form/add-edit-form.component";
 import { EventsGuardGuard } from "./core/events-guard.guard";
 import { EventDetailsComponent } from "./events/event-details/event-details.component";
+import { SignupComponent } from "./login/signup/signup.component";
 
 const routes: Routes = [
   { path: "home", component: LandingPageComponent },
@@ -29,6 +30,7 @@ const routes: Routes = [
   },
   { path: "profile", component: ProfileComponent },
   { path: "login", component: LoginComponent },
+  { path: "signup", component: SignupComponent },
 
   { path: "", redirectTo: "/home", pathMatch: "full" },
   { path: "**", component: PageNotFoundComponent },

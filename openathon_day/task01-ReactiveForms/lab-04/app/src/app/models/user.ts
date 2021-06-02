@@ -4,10 +4,10 @@ export interface User {
   readonly id: string;
 }
 
-export function initializeUser(): User {
+export function initializeUser(user?): User {
   let newUser: User = {
-    name: "",
-    password: "",
+    name: user ? user.get("name").value : "",
+    password: user ? user.get("password").value : "",
     id: "",
   };
   return newUser;

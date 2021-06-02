@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Event, initializeEvent } from "../../models/event";
 import { UserDataService } from "../../core/user-data.service";
 import { validationMessages } from "../../../environments/environment";
+import { Observable, Subscription } from "rxjs";
 
 @Component({
   selector: "oevents-add-edit-form",
@@ -12,17 +13,18 @@ import { validationMessages } from "../../../environments/environment";
 export class AddEditFormComponent implements OnInit, OnDestroy {
   addContact: FormGroup;
   eventModel: Event;
-  constructor(userData: UserDataService) {
+  formChanges: Subscription;
+  constructor(private userData: UserDataService) {
     this.eventModel = initializeEvent();
     this.addContact = new FormGroup({});
     let eventPropertyList = Object.keys(this.eventModel);
     eventPropertyList.forEach((eventName) => {
       this.createForm(eventName);
     });
-    this.addContact.valueChanges.subscribe((data) => this.onValueChanged(data));
+    this.formChanges = this.addContact.valueChanges.subscribe((data) => this.onValueChanged(data));
   }
 
-  createForm(formName: any): void {
+  private createForm(formName: any): void {
     if (this.addContact.contains(formName)) {
       this.addContact.removeControl(formName);
     }
@@ -42,7 +44,7 @@ export class AddEditFormComponent implements OnInit, OnDestroy {
     this.addContact.addControl(formName, newAddedForm);
   }
 
-  onValueChanged(changes?: any) {
+  private onValueChanged(changes?: any) {
     if (!this.addContact) {
       return;
     }
@@ -96,7 +98,7 @@ export class AddEditFormComponent implements OnInit, OnDestroy {
   // }
 
   sendedData: boolean = false;
-  onSubmit() {
+  public onSubmit() {
     let eventPropertyList = Object.keys(this.eventModel);
     //As a test, we will use timeOut function below to assume the time delay between sending the forms data until
     //the data has reach our database
@@ -126,9 +128,11 @@ export class AddEditFormComponent implements OnInit, OnDestroy {
     // let downLoadUrl = window.URL.createObjectURL(file);
     // window.open(downLoadUrl);
   }
+
   ngOnDestroy(): void {
-    if (this.addContact.valueChanges) {
-      this.addContact.valueChanges;
+    //Avoid the memory leak from the valueChanges of the form
+    if (this.formChanges) {
+      this.formChanges.unsubscribe();
     }
   }
 }

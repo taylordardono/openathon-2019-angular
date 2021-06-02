@@ -1,5 +1,5 @@
-{ 
-  "events":[
+{
+  "events": [
     {
       "id": "0",
       "title": "Introduction to JS - basic",
@@ -41,18 +41,21 @@
       "addedBy": "user01"
     }
   ],
-  "users":
-    [
-        {
-            "name": "user01",
-            "password": "123456",
-            "id": "1"
-        },
-        {
-            "name": "user02",
-            "password": "654321",
-            "id": "2"
-        }
-    ]
-
-  }
+  "users": [
+    {
+      "name": "user01",
+      "password": "123456",
+      "id": "1"
+    },
+    {
+      "name": "user02",
+      "password": "654321",
+      "id": "2"
+    },
+    {
+      "name": "user03",
+      "password": "12345678",
+      "id": "Fx5lIAu"
+    }
+  ]
+}
