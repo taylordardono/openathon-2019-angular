@@ -6,7 +6,7 @@
     <form [formGroup]="loginForm" (ngSubmit)="userLogin()" action="">
       <mat-card
         class="sign__info"
-        [ngClass]="{'unsuccess__sign': unSuccessLogin === true }"
+        [ngClass]="{'unsuccess__sign': unsuccessLogin === true }"
         >Incorrect credentials</mat-card
       >
       <mat-form-field

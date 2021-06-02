@@ -22,8 +22,8 @@ export class PasswordValidatorDirective implements Validator {
   validate(controlCheck: AbstractControl): ValidationErrors | null {
     const control = controlCheck;
     password2 = control.value;
-    console.log(password1);
-    console.log(password2);
+    // console.log(password1);
+    // console.log(password2);
     if (password1 !== password2) {
       return { passwordNotMatch: true };
     }

@@ -2,6 +2,56 @@
   <div class="section-title">
     <h1 @headerIn>Profile</h1>
   </div>
+
+  <div class="form__wrapper">
+    <form [formGroup]="editorForm" (ngSubmit)="userEdit()" action="">
+      <mat-card
+        class="sign__info"
+        [ngClass]="{ unsuccess__sign: !successEdit && unsuccessEdit === true }"
+        >Error saving your changes</mat-card
+      >
+      <mat-card
+        class="sign__info"
+        [ngClass]="{ unsuccess__sign: unsuccessEdit && successEdit === true }"
+        >Profile updated!</mat-card
+      >
+      <mat-form-field
+        appearance="fill"
+      >
+        <mat-label>Name</mat-label>
+        <input
+          (keyup.esc)="resetProfile()"
+          matInput
+          formControlName="name"
+          maxlength="25"
+          minlength="2"
+          placeholder="Name here"
+        />
+        <mat-error *ngIf="editorFormErr['name']">{{
+          editorFormErr["name"]
+        }}</mat-error>
+      </mat-form-field>
+      <mat-form-field
+        appearance="fill"
+      >
+        <mat-label>ID</mat-label>
+        <input type="text" matInput formControlName="id" />
+      </mat-form-field>
+
+      <button (click)="editMode()" *ngIf="!editorMode" mat-raised-button>
+        Edit
+      </button>
+      <button
+        *ngIf="editorMode"
+        mat-raised-button
+        type="submit"
+        [disabled]="editorForm.invalid"
+      >
+        Confirm
+      </button>
+    </form>
+  </div>
+
   <p class="copyright">
     <mat-icon data-copyright>copyright</mat-icon>
     Photo by

@@ -16,7 +16,7 @@ import { Subscription } from "rxjs";
 export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
   loginFormErr: Object = {};
-  unSuccessLogin: boolean = false;
+  unsuccessLogin: boolean = false;
   formChanges: Subscription;
   constructor(private route: Router, private userService: UserDataService) {
     this.loginFormErr = initializeUser();
@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (!this.loginForm) {
       return;
     }
-    this.unSuccessLogin = false;
+    this.unsuccessLogin = false;
     try {
       const success = await this.userService.logIn({
         name: this.loginForm.get("name").value,
@@ -75,7 +75,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       });
       this.route.navigate(["/events", "add-event"]);
     } catch (error) {
-      this.unSuccessLogin = true;
+      this.unsuccessLogin = true;
       this.loginForm.get("password").reset("");
     }
   }
