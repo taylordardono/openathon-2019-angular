@@ -16,7 +16,6 @@ import { Subscription } from "rxjs";
 export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
   loginFormErr: Object = {};
-  unsuccessLogin: boolean = false;
   formChanges: Subscription;
   constructor(private route: Router, private userService: UserDataService) {
     this.loginFormErr = initializeUser();
@@ -63,21 +62,36 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
   }
 
-  public async userLogin() {
+  public userLogin() {
     if (!this.loginForm) {
       return;
     }
-    this.unsuccessLogin = false;
-    try {
-      const success = await this.userService.logIn({
+    this.userService
+      .logIn({
         name: this.loginForm.get("name").value,
         password: this.loginForm.get("password").value,
+      })
+      .subscribe((res: any) => {
+        console.log(res);
+        if (res.id) {
+          this.route.navigate(["/events", "add-event"]);
+        } else {
+          this.loginForm.get("password").reset("");
+        }
+      }, err =>{
+        this.userService.errMess = err;
+        this.userService.errorBoolean = true;
       });
-      this.route.navigate(["/events", "add-event"]);
-    } catch (error) {
-      this.unsuccessLogin = true;
-      this.loginForm.get("password").reset("");
-    }
+    // try {
+    //   const success = await this.userService.logIn({
+    //     name: this.loginForm.get("name").value,
+    //     password: this.loginForm.get("password").value,
+    //   });
+    //   this.route.navigate(["/events", "add-event"]);
+    // } catch (error) {
+    //   this.unsuccessLogin = true;
+    //   this.loginForm.get("password").reset("");
+    // }
   }
 
   ngOnInit() {}

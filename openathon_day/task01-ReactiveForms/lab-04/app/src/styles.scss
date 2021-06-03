@@ -3,6 +3,7 @@
 @import "./app/shared/styles/fonts.scss";
 @import "./app/shared/styles/colors.scss";
 @import "./app/shared/styles/variables.scss";
+@import "./app/shared/styles/values.scss";
 
 * {
   box-sizing: border-box;
@@ -18,6 +19,7 @@ div {
 }
 
 .body {
+  position: relative;
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -37,6 +39,17 @@ mat-toolbar[data-menu] {
 
 mat-icon[data-copyright]{
   font-size: 1rem;
+}
+
+oevents-error-card {
+  position: absolute;
+  top: calc(var(--toolbarH) + 15px);
+  right: 15px;
+  mat-card[data-error]{
+    background-color: rgba(247, 211, 211, 1);
+    color: red;
+    white-space: pre-line;
+  }
 }
 
 /*Generic styles*/
@@ -66,12 +79,6 @@ a:not(p>a) {
   color: $acn-green;
 }
 
-.sign__info {
-  user-select: none;
-  opacity: 0;
-  transition: opacity ease-in 0.3s;
-}
-
 .form__wrapper {
   background-color: rgba($color: $gray-white, $alpha: 1);
   border-radius: 9px;
@@ -96,14 +103,6 @@ a:not(p>a) {
       width: 100%;
     }
   }
-  mat-card {
-    background-color: rgba(247, 211, 211, 0.8);
-    color: red;
-  }
-}
-
-.unsuccess__sign {
-  opacity: 1;
 }
 
 //Sign type button

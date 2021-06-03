@@ -5,14 +5,9 @@
 
   <div class="form__wrapper">
     <form [formGroup]="editorForm" (ngSubmit)="userEdit()" action="">
-      <mat-card
+      <mat-card *ngIf="successEdit === true"
         class="sign__info"
-        [ngClass]="{ unsuccess__sign: !successEdit && unsuccessEdit === true }"
-        >Error saving your changes</mat-card
-      >
-      <mat-card
-        class="sign__info"
-        [ngClass]="{ unsuccess__sign: unsuccessEdit && successEdit === true }"
+        [ngClass]="{ unsuccess__sign: successEdit === true }"
         >Profile updated!</mat-card
       >
       <mat-form-field

@@ -4,11 +4,6 @@
   </div>
   <div data-sign-form class="form__wrapper">
     <form [formGroup]="signUpForm" (ngSubmit)="userSignUp()" action="">
-      <mat-card
-        class="sign__info"
-        [ngClass]="{ unsuccess__sign: unSuccessSignUp === true }"
-        >Incorrect credentials</mat-card
-      >
       <mat-form-field
         [hintLabel]="signUpForm.get('name').pristine ? 'User name' : ''"
         appearance="fill"

@@ -15,7 +15,6 @@ import { animationTask } from "../shared/animations/animations";
 export class ProfileComponent implements OnInit, OnDestroy {
   public editorMode: boolean;
   public editorForm: FormGroup;
-  public unsuccessEdit: boolean;
   public successEdit: boolean;
   public editorFormErr: User;
   private editorChanges: Subscription;
@@ -23,7 +22,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.editorFormErr = initializeUser();
     const sessionData = JSON.parse(sessionStorage.getItem("user"));
     this.editorForm = new FormGroup({
-      name: new FormControl({value: sessionData.name, disabled: true}, Validators.required),
+      name: new FormControl(
+        { value: sessionData.name, disabled: true },
+        Validators.required
+      ),
       id: new FormControl({ value: sessionData.id, disabled: true }),
     });
     this.editorChanges = this.editorForm.valueChanges.subscribe((changes) => {
@@ -47,7 +49,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
   }
 
-  editMode(){
+  editMode() {
     if (!this.editorForm) {
       return;
     }
@@ -56,7 +58,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.editorMode = true;
   }
 
-  //In case we missclick the edit button, just press escape to set back to view mode
+  //In case we missclick the edit button, just press escape button to set back the view mode
   resetProfile() {
     if (!this.editorForm) {
       return;
@@ -67,26 +69,42 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.editorMode = false;
   }
 
-  async userEdit() {
+  public userEdit() {
     if (!this.editorForm) {
       return;
     }
-    this.unsuccessEdit = false;
     this.successEdit = false;
-    try {
-      const success = await this.userService.userEdit({
+    this.userService
+      .userEdit({
         name: this.editorForm.get("name").value,
         id: this.editorForm.get("id").value,
-      });
-      this.successEdit = true;
-      this.editorMode = false;
-    } catch (error) {
-      this.unsuccessEdit = true;
-    }
+      })
+      .subscribe(
+        (res: any) => {
+          if (res["id"]) {
+            this.successEdit = true;
+            this.editorMode = false;
+          }
+        },
+        (err) => {
+          this.userService.errMess = err;
+          this.userService.errorBoolean = true;
+        }
+      );
+    // try {
+    //   const success = await this.userService.userEdit({
+    //     name: this.editorForm.get("name").value,
+    //     id: this.editorForm.get("id").value,
+    //   });
+    //   this.successEdit = true;
+    //   this.editorMode = false;
+    // } catch (error) {
+    //   this.unsuccessEdit = true;
+    // }
   }
 
   ngOnInit() {}
-
+  //Avoid the memory leak from the valueChanges of the form
   ngOnDestroy() {
     if (this.editorChanges) {
       this.editorChanges.unsubscribe();

@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, HostListener, OnInit } from "@angular/core";
 import { UserDataService } from "./core/user-data.service";
 
 @Component({
@@ -7,7 +7,13 @@ import { UserDataService } from "./core/user-data.service";
   styleUrls: ["./app.component.scss"],
 })
 export class AppComponent implements OnInit {
-  constructor(private userService: UserDataService) {}
+  // @HostListener("click", ["$event"]) checkChanges() {
+  //   this.userService.errorBoolean = !this.userService.errorBoolean;
+  //   this.userService.errMess = this.userService.errMess + ";";
+  //   console.log("change");
+  // }
+  
+  constructor(public userService: UserDataService) {}
   title = "open-events-front";
   ngOnInit(): void {
     if (sessionStorage.getItem("user")) {

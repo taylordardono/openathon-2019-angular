@@ -16,7 +16,6 @@ import { PasswordValidatorDirective } from "src/app/directives/password-validato
   providers: [PasswordValidatorDirective],
 })
 export class SignupComponent implements OnInit, OnDestroy {
-  unSuccessSignUp: boolean;
   showPass: boolean;
   iconShow: string = "visibility";
   signUpForm: FormGroup;
@@ -50,7 +49,6 @@ export class SignupComponent implements OnInit, OnDestroy {
     if (!this.signUpForm) {
       return;
     }
-    this.unSuccessSignUp = false;
     const form = this.signUpForm;
     for (const field in this.signUpFormErr) {
       //We are not using date property, wich is a Date type object, so, we will use
@@ -84,16 +82,27 @@ export class SignupComponent implements OnInit, OnDestroy {
     }
   }
 
-  public async userSignUp() {
+  public userSignUp() {
     if (!this.signUpForm) {
       return;
     }
-    try {
-      const success = await this.userService.signUp(this.signUpForm);
-      this.route.navigate(["/profile"]);
-    } catch (error) {
-      this.unSuccessSignUp = true;
-    }
+
+    this.userService.signUp(this.signUpForm).subscribe((res: any) => {
+      console.log(res);
+      if (res["id"]) {
+        this.route.navigate(["/profile"]);
+      }
+    }, (err) =>{
+      this.userService.errMess = err;
+      this.userService.errorBoolean = true;
+    });
+
+    // try {
+    //   const success = await this.userService.signUp(this.signUpForm);
+    //   this.route.navigate(["/profile"]);
+    // } catch (error) {
+    //   this.unSuccessSignUp = true;
+    // }
   }
 
   public showPassword() {
@@ -103,7 +112,9 @@ export class SignupComponent implements OnInit, OnDestroy {
     }
     this.iconShow = "visibility";
   }
+
   ngOnInit(): void {}
+  //Avoid the memory leak from the valueChanges of the form
   ngOnDestroy() {
     if (this.formChanges) {
       this.formChanges.unsubscribe();

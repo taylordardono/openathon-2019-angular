@@ -14,13 +14,15 @@ import { AppComponent } from "./app.component";
 import { LandingPageComponent } from "./landing-page/landing-page.component";
 import { ToolbarComponent } from "./toolbar/toolbar.component";
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
+import { ErrorCardComponent } from './error-card/error-card.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LandingPageComponent,
     ToolbarComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    ErrorCardComponent
   ],
   imports: [
     CoreModule,
