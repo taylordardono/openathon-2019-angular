@@ -10,8 +10,10 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MatNativeDateModule } from "@angular/material/core";
 import { ReactiveFormsModule } from "@angular/forms";
-import { PasswordValidatorDirective } from '../directives/password-validator.directive';
+import { PasswordValidatorDirective } from "../directives/password-validator.directive";
 @NgModule({
   declarations: [PasswordValidatorDirective],
   imports: [
@@ -24,7 +26,9 @@ import { PasswordValidatorDirective } from '../directives/password-validator.dir
     MatMenuModule,
     MatFormFieldModule,
     MatInputModule,
-    ReactiveFormsModule
+    MatDatepickerModule,
+    MatNativeDateModule,
+    ReactiveFormsModule,
   ],
   exports: [
     BrowserAnimationsModule,
@@ -36,7 +40,9 @@ import { PasswordValidatorDirective } from '../directives/password-validator.dir
     MatMenuModule,
     MatFormFieldModule,
     MatInputModule,
-    ReactiveFormsModule
+    MatDatepickerModule,
+    MatNativeDateModule,
+    ReactiveFormsModule,
   ],
   entryComponents: [],
 })

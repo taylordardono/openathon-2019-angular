@@ -1,4 +1,25 @@
+@import "../../shared/styles/variables.scss";
+@import "../../shared/styles/colors.scss";
+
+.main__container {
+  @include container();
+  @include background("../../../assets/images/patt4.png", center, cover);
+  position: relative;
+}
+
+mat-form-field[data-event-description] {
+  width: 100%;
+}
+
+mat-form-field[data-event-title] {
+  display: block;
+}
+
 textarea {
   resize: none !important;
   height: 100px;
+}
+.location__wrapper {
+  display: flex;
+  justify-content: space-between;
 }

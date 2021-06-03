@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
   loginFormErr: Object = {};
   formChanges: Subscription;
-  constructor(private route: Router, private userService: UserDataService) {
+  constructor(private route: Router, public userService: UserDataService) {
     this.loginFormErr = initializeUser();
     this.loginForm = new FormGroup({
       name: new FormControl("", Validators.required),
@@ -81,6 +81,9 @@ export class LoginComponent implements OnInit, OnDestroy {
       }, err =>{
         this.userService.errMess = err;
         this.userService.errorBoolean = true;
+      }).add(()=>{
+        //Finish petition mark for the user view whenever its succesfull or not
+        this.userService.onPetition = false;
       });
     // try {
     //   const success = await this.userService.logIn({

@@ -1,8 +1,15 @@
 <div class="main__container">
-  <h4 *ngIf="!sendedData">Set a cool event!</h4>
-  <h4 *ngIf="sendedData">Cool event created!</h4>
-  <form [formGroup]="addContact" (ngSubmit)="onSubmit()" action="">
-    <mat-form-field
+  <div class="section-title">
+    <h1 @headerIn>Event-er</h1>
+  </div>
+  <form
+    data-event-form
+    class="form__wrapper"
+    [formGroup]="addContact"
+    (ngSubmit)="onSubmit()"
+    action=""
+  >
+    <mat-form-field data-event-title
       [hintLabel]="addContact.get('title').pristine ? 'Min 2 characters' : ''"
       appearance="fill"
     >
@@ -14,37 +21,50 @@
         minlength="2"
         placeholder="Title here"
       />
-      <mat-error
-        *ngIf="eventModel['title']"
-        >{{ eventModel["title"] }}</mat-error
-      >
+      <mat-error *ngIf="eventModel['title']">{{
+        eventModel["title"]
+      }}</mat-error>
       <mat-hint align="end"
         >{{ addContact.get("title").value?.length || 0 }}/25</mat-hint
       >
     </mat-form-field>
-    <mat-form-field
-      [hintLabel]="
-        addContact.get('location').pristine ? 'Where is that...?' : ''
-      "
-      appearance="fill"
-    >
-      <mat-label>Set location</mat-label>
-      <input matInput formControlName="location" placeholder="Location here" />
-      <mat-error
-        *ngIf="eventModel['location']"
-        >{{ eventModel["location"] }}</mat-error
-      >
-      <mat-hint
-        *ngIf="
-          addContact.get('location').valid &&
-          !addContact.get('location').pristine
+    <div class="location__wrapper">
+      <mat-form-field
+        [hintLabel]="
+          addContact.get('location').pristine ? 'Where is that...?' : ''
         "
-        align="end"
+        appearance="fill"
       >
-        <mat-icon>check</mat-icon>cool</mat-hint
-      >
-    </mat-form-field>
-    <mat-form-field
+        <mat-label>Set location</mat-label>
+        <input matInput formControlName="location" placeholder="Location here" />
+        <mat-error *ngIf="eventModel['location']">{{
+          eventModel["location"]
+        }}</mat-error>
+        <mat-hint
+          *ngIf="
+            addContact.get('location').valid &&
+            !addContact.get('location').pristine
+          "
+          align="end"
+        >
+          <mat-icon>check</mat-icon>cool</mat-hint
+        >
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Choose a date</mat-label>
+        <input matInput formControlName="date" [matDatepicker]="picker" />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="eventModel['date']">{{
+          eventModel["location"]
+        }}</mat-error>
+        <mat-hint
+          *ngIf="addContact.get('date').valid && !addContact.get('date').pristine"
+          align="end"
+        >addContact.get("date").value</mat-hint>
+      </mat-form-field>
+    </div>
+    <mat-form-field data-event-description
       [hintLabel]="
         addContact.get('description').pristine ? 'Min 10 characters' : ''
       "
@@ -58,14 +78,23 @@
         minlength="10"
         placeholder="Description here"
       ></textarea>
-      <mat-error
-        *ngIf="eventModel['description']"
-        >{{ eventModel["description"] }}</mat-error
-      >
+      <mat-error *ngIf="eventModel['description']">{{
+        eventModel["description"]
+      }}</mat-error>
       <mat-hint align="end"
         >{{ addContact.get("description").value?.length || 0 }}/400</mat-hint
       >
     </mat-form-field>
-    <button mat-raised-button color="primary" type="submit" [disabled]="addContact.invalid">Submit</button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="addContact.invalid"
+    >
+      <mat-icon data-petition *ngIf="eventService.onPetition"
+        >autorenew</mat-icon
+      >
+      <span>Create</span>
+    </button>
   </form>
 </div>

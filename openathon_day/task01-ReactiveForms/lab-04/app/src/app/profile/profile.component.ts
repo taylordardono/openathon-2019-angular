@@ -89,8 +89,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
         (err) => {
           this.userService.errMess = err;
           this.userService.errorBoolean = true;
-        }
-      );
+        }).add(()=>{
+          //Finish petition mark for the user view whenever its succesfull or not
+          this.userService.onPetition = false;
+        });;
     // try {
     //   const success = await this.userService.userEdit({
     //     name: this.editorForm.get("name").value,

@@ -7,6 +7,7 @@ import { UserDataService } from "./core/user-data.service";
   styleUrls: ["./app.component.scss"],
 })
 export class AppComponent implements OnInit {
+
   // @HostListener("click", ["$event"]) checkChanges() {
   //   this.userService.errorBoolean = !this.userService.errorBoolean;
   //   this.userService.errMess = this.userService.errMess + ";";

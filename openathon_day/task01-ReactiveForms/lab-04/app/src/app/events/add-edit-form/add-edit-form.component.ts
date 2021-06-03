@@ -1,20 +1,22 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Event, initializeEvent } from "../../models/event";
-import { UserDataService } from "../../core/user-data.service";
 import { validationMessages } from "../../../environments/environment";
-import { Observable, Subscription } from "rxjs";
+import { Subscription } from "rxjs";
+import {EventService} from "src/app/core/event.service";
+import {animationTask} from "src/app/shared/animations/animations";
 
 @Component({
   selector: "oevents-add-edit-form",
   templateUrl: "./add-edit-form.component.html",
   styleUrls: ["./add-edit-form.component.scss"],
+  animations: [animationTask]
 })
 export class AddEditFormComponent implements OnInit, OnDestroy {
   addContact: FormGroup;
   eventModel: Event;
   formChanges: Subscription;
-  constructor(private userData: UserDataService) {
+  constructor(public eventService: EventService) {
     this.eventModel = initializeEvent();
     this.addContact = new FormGroup({});
     let eventPropertyList = Object.keys(this.eventModel);

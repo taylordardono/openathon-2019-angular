@@ -1,7 +1,7 @@
 <mat-toolbar data-menu>
   <a mat-button routerLink="/home" routerLinkActive="activeLink">Home</a>
   <button mat-button [matMenuTriggerFor]="events" aria-label="event list">
-    <span>Events</span>
+    <span [ngClass]="{activeLink: activeEvent}">Events</span>
   </button>
   <mat-menu #events="matMenu">
     <a [routerLink]="['/events', 'add-event']" routerLinkActive="activeLink" mat-menu-item>

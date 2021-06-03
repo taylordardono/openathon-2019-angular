@@ -1,7 +1,14 @@
-.container {
-  display: flex;
-  flex-flow: column;
-  text-align: center;
+@import "../shared/styles/variables.scss";
+@import "../shared/styles/colors.scss";
+
+.main__container {
+  @include container();
+  @include background(
+    "../../assets/images/patt1.png",
+    center,
+    cover
+  );
+  position: relative;
 }
 
 .title,

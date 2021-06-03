@@ -56,7 +56,10 @@
         </mat-form-field>
       </div>
       <button mat-raised-button type="submit" [disabled]="signUpForm.invalid">
-        Sign up
+        <mat-icon data-petition *ngIf="userService.onPetition">autorenew</mat-icon>
+        <span *ngIf="!userService.onPetition">
+          Sign up
+        </span>
       </button>
     </form>
   </div>

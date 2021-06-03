@@ -24,7 +24,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   constructor(
     private passValidator: PasswordValidatorDirective,
     private route: Router,
-    private userService: UserDataService
+    public userService: UserDataService
   ) {
     this.signUpFormErr = initializeProfile();
     this.signUpForm = new FormGroup({
@@ -86,7 +86,6 @@ export class SignupComponent implements OnInit, OnDestroy {
     if (!this.signUpForm) {
       return;
     }
-
     this.userService.signUp(this.signUpForm).subscribe((res: any) => {
       console.log(res);
       if (res["id"]) {
@@ -95,7 +94,10 @@ export class SignupComponent implements OnInit, OnDestroy {
     }, (err) =>{
       this.userService.errMess = err;
       this.userService.errorBoolean = true;
-    });
+    }).add(()=>{
+      //Finish petition mark for the user view whenever its succesfull or not
+      this.userService.onPetition = false;
+    });;
 
     // try {
     //   const success = await this.userService.signUp(this.signUpForm);

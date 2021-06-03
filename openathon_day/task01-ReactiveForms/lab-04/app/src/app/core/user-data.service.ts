@@ -10,7 +10,7 @@ import { catchError, retry, map } from "rxjs/operators";
 import { initializeUser, User } from "../models/user";
 import { environment } from "../../environments/environment";
 
-//common headers for user actions on the webpage
+//common headers for userService
 export const headers = new HttpHeaders({
   "Content-Type": "application/json",
 });
@@ -18,6 +18,7 @@ export const headers = new HttpHeaders({
   providedIn: "root",
 })
 export class UserDataService {
+  public onPetition: boolean;
   public isAuthenticated: boolean;
   public errorBoolean: boolean;
   public errMess: string;
@@ -35,9 +36,14 @@ export class UserDataService {
   }
 
   signUp(formData): Observable<any> {
+    //Simple check to avoid multiple petitions from the user
+    if (this.onPetition) {
+      return;
+    }
     const url = environment.apiURL + "users";
     console.log(url);
     const newUser: User = initializeUser(formData);
+    this.onPetition = true;
     return this.http.post(url, newUser, { headers }).pipe(
       retry(3),
       map((us: User) => {
@@ -54,8 +60,13 @@ export class UserDataService {
   }
 
   logIn(user): Observable<any> {
+    //Simple check to avoid multiple petitions from the user
+    if (this.onPetition) {
+      return;
+    }
     const url = environment.apiURL + "users?name=" + user.name;
     console.log(url);
+    this.onPetition = true;
     return this.http.get(url, { headers }).pipe(
       retry(3),
       map((us: Array<User>) => {
@@ -84,6 +95,10 @@ export class UserDataService {
   }
 
   userEdit(user): Observable<any> {
+    //Simple check to avoid multiple petitions from the user
+    if (this.onPetition) {
+      return;
+    }
     const currentUser = JSON.parse(sessionStorage.getItem("user"));
     const url =
       environment.apiURL +
@@ -93,6 +108,7 @@ export class UserDataService {
       "&id=" +
       user.id;
     console.log(url);
+    this.onPetition = true;
     return this.http.put(url, user.name, { headers }).pipe(
       retry(3),
       map((us: Array<User>) => {
@@ -175,18 +191,19 @@ export class UserDataService {
   // }
 
   private handleError(error: HttpErrorResponse) {
-    this.errMess = "";
-    this.errorBoolean = false;
     let errorMess: string;
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
-      errorMess = "An error occurred:", error.error.message;
+      (errorMess = "An error occurred:"), error.error.message;
     } else {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong,
-      errorMess = `Backend returned code ${error.status}, ` + `body was: ${error.error}`;
+      errorMess =
+        `Backend returned code ${error.status}, ` + `body was: ${error.error}`;
     }
     // return an observable with a user-facing error message
-    return throwError("Something bad happened:" + "\n" + errorMess+ ". Please try again later.");
+    return throwError(
+      "Something bad happened:" + "\n" + errorMess + ". Please try again later." + "\n" + "Click this displayed message for confirm"
+    );
   }
 }
