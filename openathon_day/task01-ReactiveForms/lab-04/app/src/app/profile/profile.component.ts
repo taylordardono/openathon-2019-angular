@@ -18,6 +18,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   public successEdit: boolean;
   public editorFormErr: User;
   private editorChanges: Subscription;
+  public onPetition: boolean;
   constructor(private userService: UserDataService) {
     this.editorFormErr = initializeUser();
     const sessionData = JSON.parse(sessionStorage.getItem("user"));
@@ -97,7 +98,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
       )
       .add(() => {
         //Finish petition mark for the user view whenever its succesfull or not
-        this.userService.onPetition = false;
+        this.onPetition = false;
+        this.userService.onPetition = this.onPetition;
       });
     // try {
     //   const success = await this.userService.userEdit({

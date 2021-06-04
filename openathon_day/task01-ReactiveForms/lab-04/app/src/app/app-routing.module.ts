@@ -24,7 +24,7 @@ const routes: Routes = [
     canActivate: [EventsGuardGuard],
   },
   {
-    path: "event-details/:id",
+    path: "events/:id",
     component: EventDetailsComponent,
     canActivate: [EventsGuardGuard],
   },

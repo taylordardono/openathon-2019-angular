@@ -21,10 +21,11 @@ export class SignupComponent implements OnInit, OnDestroy {
   signUpForm: FormGroup;
   formChanges: Subscription;
   signUpFormErr: Profile;
+  onPetition: boolean;
   constructor(
     private passValidator: PasswordValidatorDirective,
     private route: Router,
-    public userService: UserDataService
+    private userService: UserDataService
   ) {
     this.signUpFormErr = initializeProfile();
     this.signUpForm = new FormGroup({
@@ -95,7 +96,8 @@ export class SignupComponent implements OnInit, OnDestroy {
       this.userService.errorBoolean = true;
     }).add(()=>{
       //Finish petition mark for the user view whenever its succesfull or not
-      this.userService.onPetition = false;
+      this.onPetition = false;
+      this.userService.onPetition = this.onPetition;
     });
 
     // try {

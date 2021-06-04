@@ -17,9 +17,7 @@ export class ToolbarComponent implements OnInit {
       this.activeEvent = false;
     }
   }
-
   constructor(public userService: UserDataService) {}
-
   public logOut() {
     this.userService.logOut();
   }

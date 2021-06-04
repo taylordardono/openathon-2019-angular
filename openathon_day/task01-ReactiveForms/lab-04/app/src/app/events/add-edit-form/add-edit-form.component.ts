@@ -18,7 +18,8 @@ export class AddEditFormComponent implements OnInit, OnDestroy {
   eventModel: Event;
   formChanges: Subscription;
   succesfullEvent: boolean;
-  constructor(private route: Router, public eventService: EventService) {
+  onPetition: boolean;
+  constructor(private route: Router, private eventService: EventService) {
     this.eventModel = initializeEvent();
     this.addContact = new FormGroup({});
     let eventPropertyList = Object.keys(this.eventModel);
@@ -119,7 +120,8 @@ export class AddEditFormComponent implements OnInit, OnDestroy {
       )
       .add(() => {
         //Finish petition mark for the user view whenever its succesfull or not
-        this.eventService.onPetition = false;
+        this.onPetition = false;
+        this.eventService.onPetition = this.onPetition;
       });
   }
 

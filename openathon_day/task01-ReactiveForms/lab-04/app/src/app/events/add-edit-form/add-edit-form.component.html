@@ -94,10 +94,10 @@
       >
     </mat-form-field>
     <button mat-raised-button type="submit" [disabled]="addContact.invalid">
-      <mat-icon data-petition *ngIf="eventService.onPetition"
+      <mat-icon data-petition *ngIf="onPetition"
         >autorenew</mat-icon
       >
-      <span *ngIf="eventService.onPetition">Create</span>
+      <span *ngIf="onPetition">Create</span>
     </button>
   </form>
 </div>

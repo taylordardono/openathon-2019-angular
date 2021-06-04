@@ -3,6 +3,7 @@ import { Event } from "../../models/event";
 
 import { EventService } from "../../core/event.service";
 import { animationTask } from "src/app/shared/animations/animations";
+import {Router} from "@angular/router";
 
 @Component({
   selector: "oevents-event-list",
@@ -12,22 +13,19 @@ import { animationTask } from "src/app/shared/animations/animations";
 })
 export class EventListComponent implements OnInit {
   events: Event[];
-  selectedEvent: Event;
-
-  constructor(private eventService: EventService) {}
-
+  constructor(private route: Router, private eventService: EventService) {}
   ngOnInit() {
     this.getEvents();
   }
 
   onSelectEvent(event: Event) {
-    this.selectedEvent = event;
+    this.route.navigate(["/events", event.id]);
   }
 
   getEvents() {
     this.eventService.getEvents().subscribe((events: Event[]) => {
+      this.eventService.events = events;
       this.events = events;
-      this.selectedEvent = events[0];
     });
   }
 }

@@ -1,3 +1,19 @@
+@import "../../shared/styles/variables.scss";
+@import "../../shared/styles/colors.scss";
+
+.main__container {
+  @include container();
+  @include background(
+    "../../../assets/images/denise-jans-5vGeVxQq9Vs-unsplash.jpg",
+    center,
+    cover
+  );
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+}
+
 #eventDetails {
   max-width: 600px;
 }

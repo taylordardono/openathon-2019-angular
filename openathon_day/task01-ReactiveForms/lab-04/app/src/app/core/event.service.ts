@@ -20,6 +20,7 @@ export class EventService {
   onPetition: boolean;
   errMess: string;
   errorBoolean: boolean;
+  events: Event[];
   constructor(private http: HttpClient) {}
   getEvents(): Observable<any> {
     return this.http
