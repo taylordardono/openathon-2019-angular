@@ -30,6 +30,10 @@ router-outlet + * {
   flex-grow: 1;
 }
 
+.d-flex {
+  display: flex;
+}
+
 /*Material custom styles*/
 mat-toolbar[data-menu] {
   background-color: $black;
@@ -48,16 +52,6 @@ mat-toolbar[data-menu] {
 mat-card[data-success] {
   background-color: $scss-action-bg;
   color: $scss-action-color;
-}
-
-.sign__info {
-  opacity: 0;
-  user-select: none;
-  transition: opacity 0.3s ease-out;
-}
-
-.show__sign {
-  opacity: 1;
 }
 
 mat-icon[data-petition] {
@@ -98,7 +92,6 @@ a:not(p > a) {
   cursor: pointer;
   color: black;
   text-decoration: none;
-
   &:hover {
     color: $acn-green;
   }
@@ -159,4 +152,14 @@ button[mat-raised-button] {
 
 div.mat-card-header-text {
   margin: 0 !important;
+}
+
+//Error card message
+.sign__info {
+  opacity: 0;
+  user-select: none;
+  transition: opacity 0.3s ease-out;
+}
+.show__sign {
+  opacity: 1;
 }
