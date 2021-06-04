@@ -11,7 +11,7 @@ import { Subscription } from "rxjs";
   selector: "oevents-login",
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.scss"],
-  animations: [animationTask],
+  animations: [animationTask.headerIn],
 })
 export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;

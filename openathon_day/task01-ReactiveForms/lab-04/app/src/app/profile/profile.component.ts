@@ -10,7 +10,7 @@ import { animationTask } from "../shared/animations/animations";
   selector: "oevents-profile",
   templateUrl: "./profile.component.html",
   styleUrls: ["./profile.component.scss"],
-  animations: [animationTask],
+  animations: [animationTask.headerIn],
 })
 export class ProfileComponent implements OnInit, OnDestroy {
   public editorMode: boolean;

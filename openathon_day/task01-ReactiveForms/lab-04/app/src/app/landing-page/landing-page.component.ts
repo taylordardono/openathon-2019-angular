@@ -5,7 +5,7 @@ import { animationTask } from '../shared/animations/animations';
   selector: 'oevents-landing-page',
   templateUrl: './landing-page.component.html',
   styleUrls: ['./landing-page.component.scss'],
-  animations: [animationTask]
+  animations: [animationTask.headerIn]
 })
 export class LandingPageComponent implements OnInit {
 

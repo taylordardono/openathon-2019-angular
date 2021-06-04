@@ -11,7 +11,7 @@ import { Router } from "@angular/router";
   selector: "oevents-add-edit-form",
   templateUrl: "./add-edit-form.component.html",
   styleUrls: ["./add-edit-form.component.scss"],
-  animations: [animationTask],
+  animations: [animationTask.headerIn],
 })
 export class AddEditFormComponent implements OnInit, OnDestroy {
   addContact: FormGroup;

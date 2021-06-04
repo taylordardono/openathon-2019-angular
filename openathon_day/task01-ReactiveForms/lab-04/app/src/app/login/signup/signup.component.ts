@@ -12,7 +12,7 @@ import { PasswordValidatorDirective } from "src/app/directives/password-validato
   selector: "oevents-signup",
   templateUrl: "./signup.component.html",
   styleUrls: ["./signup.component.scss"],
-  animations: [animationTask],
+  animations: [animationTask.headerIn],
   providers: [PasswordValidatorDirective],
 })
 export class SignupComponent implements OnInit, OnDestroy {

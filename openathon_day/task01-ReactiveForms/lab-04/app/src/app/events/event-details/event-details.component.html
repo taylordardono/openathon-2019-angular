@@ -1,14 +1,35 @@
-<mat-card data-event-detail *ngIf="event" id="eventDetails">
-  <mat-card-header>
-    <mat-card-title>
-      <h3>{{event.title | uppercase}}</h3>
-    </mat-card-title>
-    <mat-card-subtitle>
-      <p>{{event.location}} - {{event.date | date: 'dd/MM/yyyy'}} </p>
-    </mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>
-    <p>{{event.description}}
-    </p>
-  </mat-card-content>
-</mat-card>
+<div class="main__container">
+  <div @headerIn class="section-title d-flex">
+    <h1>Events</h1>
+    <h4>\Detail</h4>
+  </div>
+  <div @detailIn class="list__wrapper">
+    <mat-card data-event-detail *ngIf="event" id="eventDetails">
+      <mat-card-header>
+        <mat-card-title>
+          <h3>{{event.title | uppercase}}</h3>
+        </mat-card-title>
+        <mat-card-subtitle>
+          <p>{{event.location}} - {{event.date | date: 'dd/MM/yyyy'}} </p>
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{event.description}}
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <p class="copyright">
+    <mat-icon data-copyright>copyright</mat-icon>
+    Photo by
+    <a
+      href="https://unsplash.com/@dmjdenise?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+      >Denise Jans</a
+    >
+    on
+    <a
+      href="https://unsplash.com/images/things/typewriter?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+      >Unsplash</a
+    >
+  </p>
+</div>
