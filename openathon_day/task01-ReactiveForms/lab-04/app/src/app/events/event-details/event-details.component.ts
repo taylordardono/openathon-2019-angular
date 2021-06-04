@@ -12,7 +12,7 @@ import { Event } from "../../models/event";
 })
 export class EventDetailsComponent implements OnInit {
   event: Event;
-
+  authorizedEditor: boolean;
   constructor(
     private route: Router,
     private acivatedRoute: ActivatedRoute,
@@ -28,7 +28,16 @@ export class EventDetailsComponent implements OnInit {
     });
     if (!this.event) {
       this.route.navigate(["**"]);
+    } else {
+      const user = JSON.parse(sessionStorage.getItem("user"));
+      if (user.name == this.event.addedBy) {
+        this.authorizedEditor = true;
+      }
     }
+  }
+
+  goToEditionMode() {
+    this.route.navigate(["/events", "add-event", this.event.id]);
   }
 
   ngOnInit() {

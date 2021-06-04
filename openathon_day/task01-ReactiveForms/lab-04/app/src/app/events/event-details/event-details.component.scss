@@ -14,10 +14,29 @@
   justify-items: center;
 }
 
-#eventDetails {
-  max-width: 600px;
+.detail__wrapper{
+  width: 600px;
+  margin: 0 auto;
 }
+
+.event__wrapper {
+  overflow-y: auto;
+  max-height: 400px;
+  &::-webkit-scrollbar {
+    background-color: transparent;
+    width: 10px;
+    margin-left: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: $black;
+  }
+}
+
 mat-card[data-event-detail] {
   display: block;
   margin: 0 auto;
+}
+
+button{
+  margin-bottom: 1rem;
 }

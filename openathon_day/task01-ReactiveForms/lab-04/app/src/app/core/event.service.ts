@@ -8,6 +8,7 @@ import { Observable, throwError } from "rxjs";
 import { catchError, retry, map } from "rxjs/operators";
 import { environment } from "../../environments/environment";
 import { initializeEvent, Event } from "../models/event";
+import { ActivatedRoute } from "@angular/router";
 
 //common headers for eventService
 export const headers = new HttpHeaders({
@@ -21,7 +22,10 @@ export class EventService {
   errMess: string;
   errorBoolean: boolean;
   events: Event[];
-  constructor(private http: HttpClient) {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private http: HttpClient
+  ) {}
   getEvents(): Observable<any> {
     return this.http
       .get(environment.apiURL + "events", { headers })
@@ -51,6 +55,30 @@ export class EventService {
     );
   }
 
+  editEvent(formData, eventID): Observable<any> {
+    //Simple check to avoid multiple petitions from the user
+    if (this.onPetition) {
+      return;
+    }
+    let eventEdit: Event = initializeEvent(formData);
+    eventEdit.id = eventID;
+    const url = environment.apiURL + "events/" + eventEdit.id;
+    this.onPetition = true;
+    return this.http.put(url, eventEdit, { headers }).pipe(
+      retry(3),
+      map((ev: Event) => {
+        //We check if the current user is correctly edited
+        console.log(ev);
+        if (ev["id"]) {
+          if (ev.title === eventEdit.title && ev.id === eventEdit.id) {
+            return eventEdit;
+          }
+        }
+        return "Event not updated";
+      }),
+      catchError(this.handleError)
+    );
+  }
   // Error handling
   private handleError(error: HttpErrorResponse) {
     let errorMess: string;

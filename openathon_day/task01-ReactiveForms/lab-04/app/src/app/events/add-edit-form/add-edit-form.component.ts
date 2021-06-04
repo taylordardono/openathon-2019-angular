@@ -5,7 +5,7 @@ import { validationMessages } from "../../../environments/environment";
 import { Subscription } from "rxjs";
 import { EventService } from "src/app/core/event.service";
 import { animationTask } from "src/app/shared/animations/animations";
-import { Router } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "oevents-add-edit-form",
@@ -19,24 +19,16 @@ export class AddEditFormComponent implements OnInit, OnDestroy {
   formChanges: Subscription;
   succesfullEvent: boolean;
   onPetition: boolean;
-  constructor(private route: Router, private eventService: EventService) {
-    this.eventModel = initializeEvent();
-    this.addContact = new FormGroup({});
-    let eventPropertyList = Object.keys(this.eventModel);
-    const user = JSON.parse(sessionStorage.getItem("user"));
-    eventPropertyList.forEach((eventName) => {
-      this.createForm(eventName, user);
-    });
-    this.formChanges = this.addContact.valueChanges.subscribe((data) =>
-      this.onValueChanged(data)
-    );
-  }
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private eventService: EventService
+  ) {}
 
-  private createForm(formName: any, user): void {
+  private createForm(formName: any, user, value?): void {
     if (this.addContact.contains(formName)) {
       this.addContact.removeControl(formName);
     }
-    let newAddedForm = new FormControl("");
+    let newAddedForm = new FormControl(value ? value : "");
     let minLength: number = 2;
     let maxLength: number = 400;
     //We keep our id form of the formgroup clean and without validation
@@ -98,34 +90,93 @@ export class AddEditFormComponent implements OnInit, OnDestroy {
     if (!this.addContact) {
       return;
     }
-    const success = this.eventService
-      .addEvent(this.addContact)
-      .subscribe(
-        (res: any) => {
-          console.log(res);
-          if (res["id"]) {
-            this.succesfullEvent = true;
-            this.addContact.reset("");
-            let eventPropertyList = Object.keys(this.eventModel);
-            eventPropertyList.forEach((event) => {
-              this.addContact.get(event).updateValueAndValidity();
-            });
-            // this.route.navigate(["/events", "event-list"]);
+    if(this.activatedRoute.snapshot.params["id"]){
+      const success = this.eventService
+        .editEvent(this.addContact, this.activatedRoute.snapshot.params["id"])
+        .subscribe(
+          (res: any) => {
+            console.log(res);
+            if (res["id"]) {
+              this.succesfullEvent = true;
+              this.addContact.reset("");
+              let eventPropertyList = Object.keys(this.eventModel);
+              eventPropertyList.forEach((event) => {
+                this.addContact.get(event).updateValueAndValidity();
+              });
+              // this.route.navigate(["/events", "event-list"]);
+            }
+          },
+          (err) => {
+            this.eventService.errMess = err;
+            this.eventService.errorBoolean = true;
           }
-        },
-        (err) => {
-          this.eventService.errMess = err;
-          this.eventService.errorBoolean = true;
-        }
-      )
-      .add(() => {
-        //Finish petition mark for the user view whenever its succesfull or not
-        this.onPetition = false;
-        this.eventService.onPetition = this.onPetition;
-      });
+        )
+        .add(() => {
+          //Finish petition mark for the user view whenever its succesfull or not
+          this.onPetition = false;
+          this.eventService.onPetition = this.onPetition;
+        });
+    } else{
+      const success = this.eventService
+        .addEvent(this.addContact)
+        .subscribe(
+          (res: any) => {
+            console.log(res);
+            if (res["id"]) {
+              this.succesfullEvent = true;
+              this.addContact.reset("");
+              let eventPropertyList = Object.keys(this.eventModel);
+              eventPropertyList.forEach((event) => {
+                this.addContact.get(event).updateValueAndValidity();
+              });
+              // this.route.navigate(["/events", "event-list"]);
+            }
+          },
+          (err) => {
+            this.eventService.errMess = err;
+            this.eventService.errorBoolean = true;
+          }
+        )
+        .add(() => {
+          //Finish petition mark for the user view whenever its succesfull or not
+          this.onPetition = false;
+          this.eventService.onPetition = this.onPetition;
+        });
+    }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    (async () => {
+      this.eventModel = initializeEvent();
+      this.addContact = new FormGroup({});
+      let eventPropertyList = Object.keys(this.eventModel);
+      const user = JSON.parse(sessionStorage.getItem("user"));
+      //We check if is a new event or the edition of an already created one
+      let selectedEvent: Event;
+      console.log("Before result");
+      if (this.activatedRoute.snapshot.params["id"]) {
+        this.eventService.events = await new Promise((resolve, reject) => {
+          if (!this.eventService.events) {
+            this.eventService.getEvents().subscribe((events: Event[]) => {
+              resolve(events);
+            });
+          }
+        });
+        this.eventService.events.forEach((event) => {
+          if (event.id === this.activatedRoute.snapshot.params["id"]) {
+            selectedEvent = event;
+            return;
+          }
+        });
+      }
+      eventPropertyList.forEach((eventName) => {
+        this.createForm(eventName, user, selectedEvent[eventName]);
+      });
+      this.formChanges = this.addContact.valueChanges.subscribe((data) =>
+        this.onValueChanged(data)
+      );
+    })();
+  }
 
   ngOnDestroy(): void {
     //Avoid the memory leak from the valueChanges of the form

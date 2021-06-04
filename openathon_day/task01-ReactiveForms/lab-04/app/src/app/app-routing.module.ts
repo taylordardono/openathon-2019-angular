@@ -14,6 +14,11 @@ import { SignupComponent } from "./login/signup/signup.component";
 const routes: Routes = [
   { path: "home", component: LandingPageComponent },
   {
+    path: "events/add-event/:id",
+    component: AddEditFormComponent,
+    canActivate: [EventsGuardGuard],
+  },
+  {
     path: "events/add-event",
     component: AddEditFormComponent,
     canActivate: [EventsGuardGuard],

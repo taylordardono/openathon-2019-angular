@@ -3,6 +3,7 @@
     <h1 @headerIn>Event-er</h1>
   </div>
   <form
+    *ngIf="addContact"
     data-event-form
     class="form__wrapper"
     [formGroup]="addContact"
@@ -94,10 +95,8 @@
       >
     </mat-form-field>
     <button mat-raised-button type="submit" [disabled]="addContact.invalid">
-      <mat-icon data-petition *ngIf="onPetition"
-        >autorenew</mat-icon
-      >
-      <span *ngIf="onPetition">Create</span>
+      <mat-icon data-petition *ngIf="onPetition">autorenew</mat-icon>
+      <span *ngIf="!onPetition">Create</span>
     </button>
   </form>
 </div>

@@ -10,7 +10,7 @@
           <h3 (click)="onSelectEvent(event)">{{ event.title | uppercase }}</h3>
         </mat-card-title>
         <mat-card-subtitle>
-          <p>{{ event.location }} - {{ event.date | date: "dd/MM/yyyy" }}</p>
+          <p>Created by: {{event.addedBy}} in {{ event.location }} - {{ event.date | date: "dd/MM/yyyy" }}</p>
         </mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
