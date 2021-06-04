@@ -9,8 +9,39 @@
     cover
   );
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
 }
 
-#eventDetails {
+.list__wrapper {
+  overflow-y: auto;
+  max-height: 400px;
   max-width: 600px;
+  margin: 0 auto;
+  &::-webkit-scrollbar {
+    background-color: transparent;
+    width: 10px;
+    margin-left: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: $black;
+  }
+}
+
+.list__itemDescription {
+  max-height: 30px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+mat-card[data-list-item] {
+  margin: 10px 0;
+  height: 113px;
+}
+
+mat-card-title,
+h3 {
+  margin: 0 !important;
 }

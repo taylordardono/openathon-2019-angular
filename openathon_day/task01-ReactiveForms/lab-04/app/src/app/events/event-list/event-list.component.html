@@ -1,10 +1,23 @@
 <div class="main__container">
-  <mat-list>
-    <mat-list-item *ngFor="let event of events" (click)="onSelectEvent(event)">
-      <button mat-button>{{ event.title }}</button>
-    </mat-list-item>
-  </mat-list>
-  <oevents-event-details [event]="selectedEvent"></oevents-event-details>
+  <div class="section-title">
+    <h1 @headerIn>Events</h1>
+  </div>
+  <div @listIn class="list__wrapper">
+    <mat-card data-list-item *ngFor="let event of events"
+    (click)="onSelectEvent(event)">
+      <mat-card-header>
+        <mat-card-title>
+          <h3>{{ event.title | uppercase }}</h3>
+        </mat-card-title>
+        <mat-card-subtitle>
+          <p>{{ event.location }} - {{ event.date | date: "dd/MM/yyyy" }}</p>
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="list__itemDescription">{{ event.description }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
   <p class="copyright">
     <mat-icon data-copyright>copyright</mat-icon>
     Photo by

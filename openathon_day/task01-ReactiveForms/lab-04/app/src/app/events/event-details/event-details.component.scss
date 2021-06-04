@@ -1,3 +1,7 @@
-#eventDetails{
+#eventDetails {
   max-width: 600px;
+}
+mat-card[data-event-detail] {
+  display: block;
+  margin: 0 auto;
 }
