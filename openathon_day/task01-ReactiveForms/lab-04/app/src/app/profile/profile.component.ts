@@ -55,6 +55,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
     this.successEdit = false;
     this.editorForm.get("name").enable();
+    //Its the first input in which we are interested, so just regular query pick
+    //Otherwise, select the one we need on inputs array with selectorAll for example
+    document.querySelector("input").focus();
     this.editorMode = true;
   }
 
@@ -84,15 +87,18 @@ export class ProfileComponent implements OnInit, OnDestroy {
           if (res["id"]) {
             this.successEdit = true;
             this.editorMode = false;
+            this.editorForm.get("name").disable();
           }
         },
         (err) => {
           this.userService.errMess = err;
           this.userService.errorBoolean = true;
-        }).add(()=>{
-          //Finish petition mark for the user view whenever its succesfull or not
-          this.userService.onPetition = false;
-        });;
+        }
+      )
+      .add(() => {
+        //Finish petition mark for the user view whenever its succesfull or not
+        this.userService.onPetition = false;
+      });
     // try {
     //   const success = await this.userService.userEdit({
     //     name: this.editorForm.get("name").value,

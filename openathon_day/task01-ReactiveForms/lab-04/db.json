@@ -67,11 +67,6 @@
   ],
   "users": [
     {
-      "name": "user01",
-      "password": "123456",
-      "id": "1"
-    },
-    {
       "name": "user02",
       "password": "654321",
       "id": "2"
@@ -82,7 +77,7 @@
       "id": "Fx5lIAu"
     },
     {
-      "name": "user01",
+      "name": "user0001",
       "password": "12345678",
       "id": "uiaswBk"
     },

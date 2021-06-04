@@ -2,6 +2,10 @@
 
 .main__container {
   @include container();
-  @include background("../../assets/images/joel-filipe-Wc8k-KryEPM-unsplash.jpg", center, cover);
+  @include background(
+    "../../assets/images/joel-filipe-Wc8k-KryEPM-unsplash.jpg",
+    center,
+    cover
+  );
   position: relative;
 }

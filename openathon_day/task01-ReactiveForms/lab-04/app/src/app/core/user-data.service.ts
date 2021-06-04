@@ -30,6 +30,7 @@ export class UserDataService {
       JSON.stringify({
         name: us.name,
         id: us.id,
+        password: us.password,
       })
     );
     this.isAuthenticated = true;
@@ -100,32 +101,22 @@ export class UserDataService {
       return;
     }
     const currentUser = JSON.parse(sessionStorage.getItem("user"));
-    const url =
-      environment.apiURL +
-      "users?" +
-      "name=" +
-      currentUser.name +
-      "&id=" +
-      user.id;
-    console.log(url);
+    let userEdit: User = initializeUser();
+    userEdit.name = user.name;
+    userEdit.id = currentUser.id;
+    userEdit.password = currentUser.password;
+    const url = environment.apiURL + "users/" + user.id;
     this.onPetition = true;
-    return this.http.put(url, user.name, { headers }).pipe(
+    return this.http.put(url, userEdit, { headers }).pipe(
       retry(3),
-      map((us: Array<User>) => {
-        //We check if the current user is registered by selecting the last one of the
-        //users array
-        let editedUser: User = initializeUser();
-        if (us.length > 0) {
-          us.forEach((usr) => {
-            if (usr.name == user.name && usr.id == user.id) {
-              this.setUser(usr);
-              editedUser = usr;
-              return;
-            }
-          });
-        }
-        if (editedUser.name) {
-          return editedUser;
+      map((us: User) => {
+        //We check if the current user is correctly edited
+        console.log(us);
+        if (us["id"]) {
+          if (us.name === userEdit.name && us.id === userEdit.id) {
+            this.setUser(userEdit);
+            return userEdit;
+          }
         }
         return "User not updated";
       }),
@@ -203,7 +194,12 @@ export class UserDataService {
     }
     // return an observable with a user-facing error message
     return throwError(
-      "Something bad happened:" + "\n" + errorMess + ". Please try again later." + "\n" + "Click this displayed message for confirm"
+      "Something bad happened:" +
+        "\n" +
+        errorMess +
+        ". Please try again later." +
+        "\n" +
+        "Click this displayed message for confirm"
     );
   }
 }

@@ -1,7 +1,7 @@
 export interface User {
-  readonly name: string;
-  readonly password: string;
-  readonly id: string;
+  name: string;
+  password: string;
+  id: string;
 }
 
 export function initializeUser(user?): User {

@@ -45,11 +45,26 @@ mat-toolbar[data-menu] {
   }
 }
 
+mat-card[data-success] {
+  background-color: $scss-action-bg;
+  color: $scss-action-color;
+}
+
+.sign__info {
+  opacity: 0;
+  user-select: none;
+  transition: opacity 0.3s ease-out;
+}
+
+.show__sign {
+  opacity: 1;
+}
+
 mat-icon[data-petition] {
   animation-name: onPetition;
   animation-duration: 1s;
   animation-iteration-count: infinite;
-  animation-timing-function: cubic-bezier(.5, .5, .5, .5);
+  animation-timing-function: cubic-bezier(0.5, 0.5, 0.5, 0.5);
 }
 
 mat-icon[data-copyright] {
