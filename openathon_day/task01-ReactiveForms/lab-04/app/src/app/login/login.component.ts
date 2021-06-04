@@ -26,7 +26,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.formChanges = this.loginForm.valueChanges.subscribe((data) =>
       this.onValueChanged(data)
     );
-    console.log(this.loginFormErr);
   }
 
   private onValueChanged(changes?: any) {
@@ -71,17 +70,20 @@ export class LoginComponent implements OnInit, OnDestroy {
         name: this.loginForm.get("name").value,
         password: this.loginForm.get("password").value,
       })
-      .subscribe((res: any) => {
-        console.log(res);
-        if (res.id) {
-          this.route.navigate(["/events", "add-event"]);
-        } else {
+      .subscribe(
+        (res: any) => {
+          console.log(res);
+          if (res["id"]) {
+            this.route.navigate(["/profile"]);
+          }
+        },
+        (err) => {
           this.loginForm.get("password").reset("");
+          this.userService.errMess = err;
+          this.userService.errorBoolean = true;
         }
-      }, err =>{
-        this.userService.errMess = err;
-        this.userService.errorBoolean = true;
-      }).add(()=>{
+      )
+      .add(() => {
         //Finish petition mark for the user view whenever its succesfull or not
         this.userService.onPetition = false;
       });

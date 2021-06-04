@@ -87,7 +87,6 @@ export class SignupComponent implements OnInit, OnDestroy {
       return;
     }
     this.userService.signUp(this.signUpForm).subscribe((res: any) => {
-      console.log(res);
       if (res["id"]) {
         this.route.navigate(["/profile"]);
       }
@@ -97,7 +96,7 @@ export class SignupComponent implements OnInit, OnDestroy {
     }).add(()=>{
       //Finish petition mark for the user view whenever its succesfull or not
       this.userService.onPetition = false;
-    });;
+    });
 
     // try {
     //   const success = await this.userService.signUp(this.signUpForm);

@@ -1,5 +1,7 @@
 @import "../shared/styles/variables.scss";
 @import "../shared/styles/colors.scss";
+@import "../shared/styles/fonts.scss";
+
 
 .main__container {
   @include container();
@@ -11,18 +13,13 @@
   position: relative;
 }
 
-.title,
-.subtitle,
-.message {
-  padding: 1rem;
+.landing__wrapper{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.title {
-  color: #8bc34a;
-}
-
-.subtitle {
-}
-
-.message {
+.subtitle{
+  font-family: "Graphik Super";
 }

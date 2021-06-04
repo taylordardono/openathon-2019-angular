@@ -18,8 +18,9 @@ export const headers = new HttpHeaders({
 })
 export class EventService {
   onPetition: boolean;
+  errMess: string;
+  errorBoolean: boolean;
   constructor(private http: HttpClient) {}
-
   getEvents(): Observable<any> {
     return this.http
       .get(environment.apiURL + "events", { headers })
@@ -31,7 +32,7 @@ export class EventService {
     if (this.onPetition) {
       return;
     }
-    const url = environment.apiURL + "users";
+    const url = environment.apiURL + "events";
     console.log(url);
     const newEvent: Event = initializeEvent(formData);
     this.onPetition = true;

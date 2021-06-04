@@ -39,6 +39,30 @@
       "date": "2019-12-05",
       "description": "Nulla aliqua duis adipisicing do amet et ullamco commodo id laborum nulla ipsum culpa. Lorem ipsum commodo quis amet consequat nostrud esse est deserunt. Laboris incididunt esse amet sunt tempor pariatur nisi irure nulla veniam id quis elit. Velit officia quis veniam aliqua. Cupidatat velit enim officia dolor ea veniam proident culpa ea duis labore nostrud. Occaecat in velit esse et. Duis anim ad elit ipsum occaecat Lorem veniam labore consequat laboris non.",
       "addedBy": "user01"
+    },
+    {
+      "id": "dU-mreF",
+      "title": "title for event",
+      "location": "Pamplona",
+      "description": "This is a testing description for the cool event above",
+      "addedBy": "user01",
+      "date": "2021-06-03T22:00:00.000Z"
+    },
+    {
+      "id": "Ox03h03",
+      "title": "title for event 2",
+      "location": "Pamplona",
+      "description": "Description in here too",
+      "addedBy": "user01",
+      "date": "2021-06-04T22:00:00.000Z"
+    },
+    {
+      "id": "h87IdqU",
+      "title": "title for event 3",
+      "location": "Pamplona",
+      "description": "f´f´psñ,lv,sd,è",
+      "addedBy": "user01",
+      "date": "2021-06-22T22:00:00.000Z"
     }
   ],
   "users": [

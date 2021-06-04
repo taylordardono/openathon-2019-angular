@@ -11,8 +11,7 @@ export class ErrorCardComponent implements OnInit, OnChanges {
   constructor() {}
   public isErrorCard: boolean;
   public errorMessCard: string;
-  ngOnChanges(changes?) {
-    console.log(changes);
+  ngOnChanges() {
     this.errorMessCard = this.errorMess;
     this.isErrorCard = this.isError;
   }

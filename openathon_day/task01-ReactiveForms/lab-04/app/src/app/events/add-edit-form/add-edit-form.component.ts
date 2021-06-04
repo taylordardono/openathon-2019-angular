@@ -3,46 +3,59 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Event, initializeEvent } from "../../models/event";
 import { validationMessages } from "../../../environments/environment";
 import { Subscription } from "rxjs";
-import {EventService} from "src/app/core/event.service";
-import {animationTask} from "src/app/shared/animations/animations";
+import { EventService } from "src/app/core/event.service";
+import { animationTask } from "src/app/shared/animations/animations";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "oevents-add-edit-form",
   templateUrl: "./add-edit-form.component.html",
   styleUrls: ["./add-edit-form.component.scss"],
-  animations: [animationTask]
+  animations: [animationTask],
 })
 export class AddEditFormComponent implements OnInit, OnDestroy {
   addContact: FormGroup;
   eventModel: Event;
   formChanges: Subscription;
-  constructor(public eventService: EventService) {
+  succesfullEvent: boolean;
+  constructor(private route: Router, public eventService: EventService) {
     this.eventModel = initializeEvent();
     this.addContact = new FormGroup({});
     let eventPropertyList = Object.keys(this.eventModel);
+    const user = JSON.parse(sessionStorage.getItem("user"));
     eventPropertyList.forEach((eventName) => {
-      this.createForm(eventName);
+      this.createForm(eventName, user);
     });
-    this.formChanges = this.addContact.valueChanges.subscribe((data) => this.onValueChanged(data));
+    this.formChanges = this.addContact.valueChanges.subscribe((data) =>
+      this.onValueChanged(data)
+    );
   }
 
-  private createForm(formName: any): void {
+  private createForm(formName: any, user): void {
     if (this.addContact.contains(formName)) {
       this.addContact.removeControl(formName);
     }
     let newAddedForm = new FormControl("");
     let minLength: number = 2;
     let maxLength: number = 400;
-    if (formName === "location" || formName === "description") {
-      if (formName === "location") {
-        maxLength = 25;
-      } else {
-        minLength = 10;
+    //We keep our id form of the formgroup clean and without validation
+    //so the event form can pass the validations and have an automatic assign of the id when
+    //created in our database
+    if (formName !== "id") {
+      if (formName === "location" || formName === "description") {
+        if (formName === "location") {
+          maxLength = 25;
+        } else {
+          minLength = 10;
+        }
+        newAddedForm.setValidators(Validators.minLength(minLength));
+        newAddedForm.setValidators(Validators.maxLength(maxLength));
       }
-      newAddedForm.setValidators(Validators.minLength(minLength));
-      newAddedForm.setValidators(Validators.maxLength(maxLength));
+      newAddedForm.setValidators(Validators.required);
+      if (formName === "addedBy") {
+        newAddedForm.setValue(user.name);
+      }
     }
-    newAddedForm.setValidators(Validators.required);
     this.addContact.addControl(formName, newAddedForm);
   }
 
@@ -52,11 +65,7 @@ export class AddEditFormComponent implements OnInit, OnDestroy {
     }
     const form = this.addContact;
     for (const field in this.eventModel) {
-      //We are not using date property, wich is a Date type object, so, we will use
-      //try catch method until we decide what we should do with the date property
-      try {
-        this.eventModel[field] = ""; // clears previous error messages if any
-      } catch (error) {}
+      this.eventModel[field] = ""; // clears previous error messages if any
       const control = form.get(field);
       if (control && control.touched && !control.valid) {
         for (const key in validationMessages) {
@@ -69,7 +78,10 @@ export class AddEditFormComponent implements OnInit, OnDestroy {
               success = false;
             }
           } else {
-            if (control.hasError(completeKey)) {
+            if (
+              control.hasError(completeKey) ||
+              (field === "date" && control.hasError("matDatepickerParse"))
+            ) {
               success = false;
             }
           }
@@ -81,55 +93,37 @@ export class AddEditFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  // getErrorMessage(formName: string): string {
-  //   let errorMessage: string = "";
-  //   if (this.addContact.get(formName).hasError("required")) {
-  //     errorMessage = validationMessages.required;
-  //   } else {
-  //     if (
-  //       this.addContact.get(formName).hasError("minlength") ||
-  //       this.addContact.get(formName).hasError("maxlength")
-  //     ) {
-  //       errorMessage = validationMessages.length;
-  //     }
-  //   }
-  //   this.eventModel[formName] = errorMessage;
-  //   console.log(this.eventModel[formName]);
-  //   console.log(errorMessage);
-  //   return errorMessage;
-  // }
-
-  sendedData: boolean = false;
   public onSubmit() {
-    let eventPropertyList = Object.keys(this.eventModel);
-    //As a test, we will use timeOut function below to assume the time delay between sending the forms data until
-    //the data has reach our database
-    this.sendedData = true;
-    eventPropertyList.forEach((eventName) => {
-      this.addContact.get(eventName).setValue("");
-      this.addContact.get(eventName).markAsPristine();
-      this.addContact.get(eventName).markAsUntouched();
-      //We are not using date property, wich is a Date type object, so, we will use
-      //try catch method until we decide what we should do with the date property
-      try {
-        this.eventModel[eventName] = "";
-      } catch (error) {}
-      setTimeout(() => {
-        this.sendedData = false;
-      }, 1500);
-    });
+    if (!this.addContact) {
+      return;
+    }
+    const success = this.eventService
+      .addEvent(this.addContact)
+      .subscribe(
+        (res: any) => {
+          console.log(res);
+          if (res["id"]) {
+            this.succesfullEvent = true;
+            this.addContact.reset("");
+            let eventPropertyList = Object.keys(this.eventModel);
+            eventPropertyList.forEach((event) => {
+              this.addContact.get(event).updateValueAndValidity();
+            });
+            // this.route.navigate(["/events", "event-list"]);
+          }
+        },
+        (err) => {
+          this.eventService.errMess = err;
+          this.eventService.errorBoolean = true;
+        }
+      )
+      .add(() => {
+        //Finish petition mark for the user view whenever its succesfull or not
+        this.eventService.onPetition = false;
+      });
   }
 
-  ngOnInit(): void {
-    console.log(this.addContact);
-    // let test = {
-    //   test: "test",
-    //   numer: 0
-    // }
-    // let file = new Blob([JSON.stringify(test)], {type: "json"});
-    // let downLoadUrl = window.URL.createObjectURL(file);
-    // window.open(downLoadUrl);
-  }
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     //Avoid the memory leak from the valueChanges of the form
