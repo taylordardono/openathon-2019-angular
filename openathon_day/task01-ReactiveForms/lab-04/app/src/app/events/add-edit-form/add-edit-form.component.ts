@@ -11,7 +11,7 @@ import { ActivatedRoute } from "@angular/router";
   selector: "oevents-add-edit-form",
   templateUrl: "./add-edit-form.component.html",
   styleUrls: ["./add-edit-form.component.scss"],
-  animations: [animationTask.headerIn],
+  animations: [animationTask.headerIn, animationTask.listIn],
 })
 export class AddEditFormComponent implements OnInit, OnDestroy {
   addContact: FormGroup;
@@ -19,6 +19,7 @@ export class AddEditFormComponent implements OnInit, OnDestroy {
   formChanges: Subscription;
   succesfullEvent: boolean;
   onPetition: boolean;
+  loadedForm: boolean;
   constructor(
     private activatedRoute: ActivatedRoute,
     private eventService: EventService
@@ -86,11 +87,11 @@ export class AddEditFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  public onSubmit() {
+  public setEvent() {
     if (!this.addContact) {
       return;
     }
-    if(this.activatedRoute.snapshot.params["id"]){
+    if (this.activatedRoute.snapshot.params["id"]) {
       const success = this.eventService
         .editEvent(this.addContact, this.activatedRoute.snapshot.params["id"])
         .subscribe(
@@ -116,7 +117,7 @@ export class AddEditFormComponent implements OnInit, OnDestroy {
           this.onPetition = false;
           this.eventService.onPetition = this.onPetition;
         });
-    } else{
+    } else {
       const success = this.eventService
         .addEvent(this.addContact)
         .subscribe(
@@ -146,39 +147,48 @@ export class AddEditFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.loadedForm = false;
+    this.eventService.activeEvent = true;
+    this.eventModel = initializeEvent();
+    this.addContact = new FormGroup({});
+    let eventPropertyList = Object.keys(this.eventModel);
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    let selectedEvent: Event = initializeEvent();
     (async () => {
-      this.eventModel = initializeEvent();
-      this.addContact = new FormGroup({});
-      let eventPropertyList = Object.keys(this.eventModel);
-      const user = JSON.parse(sessionStorage.getItem("user"));
       //We check if is a new event or the edition of an already created one
-      let selectedEvent: Event;
       console.log("Before result");
       if (this.activatedRoute.snapshot.params["id"]) {
         this.eventService.events = await new Promise((resolve, reject) => {
           if (!this.eventService.events) {
-            this.eventService.getEvents().subscribe((events: Event[]) => {
-              resolve(events);
-            });
-          }
-        });
-        this.eventService.events.forEach((event) => {
-          if (event.id === this.activatedRoute.snapshot.params["id"]) {
-            selectedEvent = event;
-            return;
+            this.eventService.getEvents().subscribe(
+              (events: Event[]) => {
+                resolve(events);
+              },
+              (err) => {
+                reject(err);
+              }
+            );
           }
         });
       }
+      this.eventService.events.forEach((event) => {
+        if (event.id === this.activatedRoute.snapshot.params["id"]) {
+          selectedEvent = event;
+          return;
+        }
+      });
       eventPropertyList.forEach((eventName) => {
         this.createForm(eventName, user, selectedEvent[eventName]);
       });
       this.formChanges = this.addContact.valueChanges.subscribe((data) =>
         this.onValueChanged(data)
       );
+      this.loadedForm = true;
     })();
   }
 
   ngOnDestroy(): void {
+    this.eventService.activeEvent = false;
     //Avoid the memory leak from the valueChanges of the form
     if (this.formChanges) {
       this.formChanges.unsubscribe();

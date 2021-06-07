@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { EventService } from "src/app/core/event.service";
 import { animationTask } from "src/app/shared/animations/animations";
@@ -10,7 +10,7 @@ import { Event } from "../../models/event";
   styleUrls: ["./event-details.component.scss"],
   animations: [animationTask.headerIn, animationTask.detailIn],
 })
-export class EventDetailsComponent implements OnInit {
+export class EventDetailsComponent implements OnInit, OnDestroy {
   event: Event;
   authorizedEditor: boolean;
   constructor(
@@ -30,7 +30,7 @@ export class EventDetailsComponent implements OnInit {
       this.route.navigate(["**"]);
     } else {
       const user = JSON.parse(sessionStorage.getItem("user"));
-      if (user.name == this.event.addedBy) {
+      if (user.name === this.event.addedBy) {
         this.authorizedEditor = true;
       }
     }
@@ -41,6 +41,7 @@ export class EventDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.eventService.activeEvent = true;
     if (!this.eventService.events) {
       this.eventService.getEvents().subscribe((events: Event[]) => {
         this.eventService.events = events;
@@ -49,5 +50,9 @@ export class EventDetailsComponent implements OnInit {
     } else {
       this.setEvent();
     }
+  }
+
+  ngOnDestroy(){
+    this.eventService.activeEvent = false;
   }
 }

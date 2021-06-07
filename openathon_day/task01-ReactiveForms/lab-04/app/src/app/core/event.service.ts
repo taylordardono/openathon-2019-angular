@@ -22,6 +22,7 @@ export class EventService {
   errMess: string;
   errorBoolean: boolean;
   events: Event[];
+  activeEvent: boolean;
   constructor(
     private activatedRoute: ActivatedRoute,
     private http: HttpClient

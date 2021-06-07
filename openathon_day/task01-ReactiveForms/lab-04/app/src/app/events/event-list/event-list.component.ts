@@ -1,9 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Event } from "../../models/event";
 
 import { EventService } from "../../core/event.service";
 import { animationTask } from "src/app/shared/animations/animations";
-import {Router} from "@angular/router";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "oevents-event-list",
@@ -11,10 +11,11 @@ import {Router} from "@angular/router";
   styleUrls: ["./event-list.component.scss"],
   animations: [animationTask.headerIn, animationTask.listIn],
 })
-export class EventListComponent implements OnInit {
+export class EventListComponent implements OnInit, OnDestroy {
   events: Event[];
   constructor(private route: Router, private eventService: EventService) {}
   ngOnInit() {
+    this.eventService.activeEvent = true;
     this.getEvents();
   }
 
@@ -27,5 +28,9 @@ export class EventListComponent implements OnInit {
       this.eventService.events = events;
       this.events = events;
     });
+  }
+
+  ngOnDestroy() {
+    this.eventService.activeEvent = false;
   }
 }

@@ -3,11 +3,12 @@
     <h1 @headerIn>Event-er</h1>
   </div>
   <form
-    *ngIf="addContact"
+    @listIn
+    *ngIf="loadedForm"
     data-event-form
     class="form__wrapper"
     [formGroup]="addContact"
-    (ngSubmit)="onSubmit()"
+    (ngSubmit)="setEvent()"
     action=""
   >
     <div class="location__wrapper">
