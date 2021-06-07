@@ -64,21 +64,9 @@ export class AddEditFormComponent implements OnInit, OnDestroy {
       const control = form.get(field);
       if (control && control.touched && !control.valid) {
         for (const key in validationMessages) {
-          let completeKey: string = String(key);
           let success: boolean = true;
-          if (completeKey.indexOf("length") !== -1) {
-            if (control.hasError("minlength")) {
-              success = false;
-            } else if (control.hasError("maxlength")) {
-              success = false;
-            }
-          } else {
-            if (
-              control.hasError(completeKey) ||
-              (field === "date" && control.hasError("matDatepickerParse"))
-            ) {
-              success = false;
-            }
+          if (control.hasError(key)) {
+            success = false;
           }
           if (!success) {
             this.eventModel[field] = validationMessages[key];
@@ -167,7 +155,7 @@ export class AddEditFormComponent implements OnInit, OnDestroy {
                 reject(err);
               }
             );
-          } else{
+          } else {
             //If the events are already loaded, we just simply resolve them
             resolve(this.eventService.events);
           }

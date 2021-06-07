@@ -9,9 +9,10 @@ export const environment = {
 
 export const validationMessages = {
   required: "The field is required",
-  length: "The length is not valid",
+  minlength: "The length is not valid(under)",
+  maxlength: "The length is not valid(over)",
   passwordNotMatch: "The password dont match",
-  date: "Incorrect format"
+  matDatepickerParse: "Incorrect format",
 };
 /*
  * For easier debugging in development mode, you can import the following file

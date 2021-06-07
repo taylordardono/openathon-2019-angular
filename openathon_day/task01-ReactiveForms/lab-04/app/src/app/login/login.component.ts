@@ -6,6 +6,7 @@ import { validationMessages } from "../../environments/environment";
 import { initializeUser } from "../models/user";
 import { animationTask } from "../shared/animations/animations";
 import { Subscription } from "rxjs";
+import { stringify } from "@angular/compiler/src/util";
 
 @Component({
   selector: "oevents-login",
@@ -41,18 +42,9 @@ export class LoginComponent implements OnInit, OnDestroy {
       const control = form.get(field);
       if (control && control.touched && !control.valid) {
         for (const key in validationMessages) {
-          let completeKey: string = String(key);
           let success: boolean = true;
-          if (completeKey.indexOf("length") !== -1) {
-            if (control.hasError("minlength")) {
-              success = false;
-            } else if (control.hasError("maxlength")) {
-              success = false;
-            }
-          } else {
-            if (control.hasError(completeKey)) {
-              success = false;
-            }
+          if (control.hasError(key)) {
+            success = false;
           }
           if (!success) {
             this.loginFormErr[field] = validationMessages[key];
