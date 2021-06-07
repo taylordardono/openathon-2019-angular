@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Subscription } from "rxjs";
 import { validationMessages } from "src/environments/environment";
 import { UserDataService } from "../core/user-data.service";
+import { ErrorService } from "../core/error.service";
 import { initializeUser, User } from "../models/user";
 import { animationTask } from "../shared/animations/animations";
 
@@ -15,11 +16,10 @@ import { animationTask } from "../shared/animations/animations";
 export class ProfileComponent implements OnInit, OnDestroy {
   public editorMode: boolean;
   public editorForm: FormGroup;
-  public successEdit: boolean;
   public editorFormErr: User;
   private editorChanges: Subscription;
   public onPetition: boolean;
-  constructor(private userService: UserDataService) {
+  constructor(private errorService: ErrorService, private userService: UserDataService) {
     this.editorFormErr = initializeUser();
     const sessionData = JSON.parse(sessionStorage.getItem("user"));
     this.editorForm = new FormGroup({
@@ -54,7 +54,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
     if (!this.editorForm) {
       return;
     }
-    this.successEdit = false;
     this.editorForm.get("name").enable();
     //Its the first input in which we are interested, so just regular query pick
     //Otherwise, select the one we need on inputs array with selectorAll for example
@@ -77,7 +76,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     if (!this.editorForm) {
       return;
     }
-    this.successEdit = false;
+    //Reset of error/success message and variables
+    this.errorService.resetValues();
     this.userService
       .userEdit({
         name: this.editorForm.get("name").value,
@@ -86,14 +86,15 @@ export class ProfileComponent implements OnInit, OnDestroy {
       .subscribe(
         (res: any) => {
           if (res["id"]) {
-            this.successEdit = true;
+            this.errorService.message = "Profile updated!";
+            this.errorService.successBoolean = true;
             this.editorMode = false;
             this.editorForm.get("name").disable();
           }
         },
         (err) => {
-          this.userService.errMess = err;
-          this.userService.errorBoolean = true;
+          this.errorService.message = err;
+          this.errorService.errorBoolean = true;
         }
       )
       .add(() => {

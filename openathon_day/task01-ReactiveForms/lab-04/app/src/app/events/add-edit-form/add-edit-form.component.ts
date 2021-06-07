@@ -4,6 +4,7 @@ import { Event, initializeEvent } from "../../models/event";
 import { validationMessages } from "../../../environments/environment";
 import { Subscription } from "rxjs";
 import { EventService } from "src/app/core/event.service";
+import { ErrorService } from "src/app/core/error.service";
 import { animationTask } from "src/app/shared/animations/animations";
 import { ActivatedRoute } from "@angular/router";
 
@@ -17,14 +18,15 @@ export class AddEditFormComponent implements OnInit, OnDestroy {
   addContact: FormGroup;
   eventModel: Event;
   formChanges: Subscription;
-  succesfullEvent: boolean;
   onPetition: boolean;
   loadedForm: boolean;
-  eventID: string;
+  eventID: String;
   constructor(
     private activatedRoute: ActivatedRoute,
-    private eventService: EventService
-  ) {}
+    private eventService: EventService,
+    private errorService: ErrorService
+  ) {
+  }
 
   private createForm(formName: any, user, value?): void {
     if (this.addContact.contains(formName)) {
@@ -80,24 +82,27 @@ export class AddEditFormComponent implements OnInit, OnDestroy {
     if (!this.addContact) {
       return;
     }
+    //Reset of error/success message and variables
+    this.errorService.resetValues();
     if (this.eventID) {
       const success = this.eventService
         .editEvent(this.addContact, this.eventID)
         .subscribe(
           (res: any) => {
             if (res["id"]) {
-              this.succesfullEvent = true;
-              this.addContact.reset("");
-              let eventPropertyList = Object.keys(this.eventModel);
-              eventPropertyList.forEach((event) => {
-                this.addContact.get(event).updateValueAndValidity();
-              });
+              this.errorService.message = "Event edited!";
+              this.errorService.successBoolean = true;
+              // this.addContact.reset("");
+              // let eventPropertyList = Object.keys(this.eventModel);
+              // eventPropertyList.forEach((event) => {
+              //   this.addContact.get(event).markAsUntouched();
+              // });
               // this.route.navigate(["/events", "event-list"]);
             }
           },
           (err) => {
-            this.eventService.errMess = err;
-            this.eventService.errorBoolean = true;
+            this.errorService.message = err;
+            this.errorService.errorBoolean = true;
           }
         )
         .add(() => {
@@ -111,18 +116,19 @@ export class AddEditFormComponent implements OnInit, OnDestroy {
         .subscribe(
           (res: any) => {
             if (res["id"]) {
-              this.succesfullEvent = true;
-              this.addContact.reset("");
-              let eventPropertyList = Object.keys(this.eventModel);
-              eventPropertyList.forEach((event) => {
-                this.addContact.get(event).updateValueAndValidity();
-              });
+              this.errorService.message = "Event created!";
+              this.errorService.successBoolean = true;
+              // this.addContact.reset("");
+              // let eventPropertyList = Object.keys(this.eventModel);
+              // eventPropertyList.forEach((event) => {
+              //   this.addContact.get(event).markAsUntouched();
+              // });
               // this.route.navigate(["/events", "event-list"]);
             }
           },
           (err) => {
-            this.eventService.errMess = err;
-            this.eventService.errorBoolean = true;
+            this.errorService.message = err;
+            this.errorService.errorBoolean = true;
           }
         )
         .add(() => {

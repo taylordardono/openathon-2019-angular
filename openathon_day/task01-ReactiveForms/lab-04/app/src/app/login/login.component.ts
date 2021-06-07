@@ -2,11 +2,11 @@ import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { UserDataService } from "../core/user-data.service";
+import { ErrorService } from "../core/error.service";
 import { validationMessages } from "../../environments/environment";
 import { initializeUser } from "../models/user";
 import { animationTask } from "../shared/animations/animations";
 import { Subscription } from "rxjs";
-import { stringify } from "@angular/compiler/src/util";
 
 @Component({
   selector: "oevents-login",
@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   loginFormErr: Object = {};
   formChanges: Subscription;
   onPetition: boolean;
-  constructor(private route: Router, private userService: UserDataService) {
+  constructor(private route: Router, private userService: UserDataService, private errorService: ErrorService) {
     this.loginFormErr = initializeUser();
     this.loginForm = new FormGroup({
       name: new FormControl("", Validators.required),
@@ -58,6 +58,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (!this.loginForm) {
       return;
     }
+    //Reset of error/success message and variables
+    this.errorService.resetValues();
     this.userService
       .logIn({
         name: this.loginForm.get("name").value,
@@ -71,8 +73,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         },
         (err) => {
           this.loginForm.get("password").reset("");
-          this.userService.errMess = err;
-          this.userService.errorBoolean = true;
+          this.errorService.message = err;
+          this.errorService.errorBoolean = true;
         }
       )
       .add(() => {

@@ -41,28 +41,52 @@
       "addedBy": "user01"
     },
     {
-      "id": "dU-mreF",
-      "title": "title for event",
-      "location": "Pamplona",
-      "description": "This is a testing description for the cool event above",
+      "id": "G6ZEhsM",
+      "title": "new event date",
+      "location": "pamplona",
+      "description": "This is a fresh new description with the cool updated date",
       "addedBy": "user01",
-      "date": "2021-06-03T22:00:00.000Z"
+      "date": "2021-06-07"
     },
     {
-      "id": "Ox03h03",
-      "title": "title for event 25",
+      "id": "KvUyWDP",
+      "title": "new event 24",
       "location": "Pamplona",
-      "description": "Description in here too, now with more edition",
+      "description": "description for some new tests",
       "addedBy": "user01",
-      "date": "2021-06-04T22:00:00.000Z"
+      "date": "2021-06-07"
     },
     {
-      "id": "h87IdqU",
-      "title": "title for event 3",
+      "id": "UnjTTXD",
+      "title": "new event 22",
       "location": "Pamplona",
-      "description": "f´f´psñ,lv,sd,è",
+      "description": "ñf´sdfasfñlasfalnfknfvemiormvf\n",
       "addedBy": "user01",
-      "date": "2021-06-22T22:00:00.000Z"
+      "date": "2021-06-07"
+    },
+    {
+      "id": "okfVYsi",
+      "title": "title for evention",
+      "location": "Pamplona",
+      "description": "pwf´wqfñfmerocmtr,vdvzn-fga´pavmdc",
+      "addedBy": "user01",
+      "date": "2021-06-07"
+    },
+    {
+      "id": "YKtgh6G",
+      "title": "title2",
+      "location": "Pamplona",
+      "description": "dsfsfañdkfnñasdlfmsdlañfmsf",
+      "addedBy": "user01",
+      "date": "2021-06-07"
+    },
+    {
+      "id": "HhdLdvl",
+      "title": "ñfsdf",
+      "location": "sñdfsdfs",
+      "description": "ñsdfsñdf´sdfa´sd,fasñdf,sf",
+      "addedBy": "user01",
+      "date": "2021-06-07"
     }
   ],
   "users": [

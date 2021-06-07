@@ -1,3 +1,14 @@
-<mat-card (click)="isErrorCard = false" *ngIf="isErrorCard" data-error class="card__position"
->{{errorMessCard}}</mat-card
+<mat-card
+  (click)="isErrorCard = false"
+  *ngIf="isErrorCard"
+  data-error
+  class="card__position"
+  >{{ messageCard }}</mat-card
 >
+<mat-card
+  (click)="isSuccessfulCard = false"
+  *ngIf="isSuccessfulCard"
+  data-success
+  class="card__position"
+  >{{ messageCard }}
+</mat-card>

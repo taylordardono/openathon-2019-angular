@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { UserDataService } from "../../core/user-data.service";
+import { ErrorService } from "../../core/error.service";
 import { validationMessages } from "../../../environments/environment";
 import { animationTask } from "../../shared/animations/animations";
 import { Subscription } from "rxjs";
@@ -17,7 +18,7 @@ import { PasswordValidatorDirective } from "src/app/directives/password-validato
 })
 export class SignupComponent implements OnInit, OnDestroy {
   showPass: boolean;
-  iconShow: string = "visibility";
+  iconShow: String = "visibility";
   signUpForm: FormGroup;
   formChanges: Subscription;
   signUpFormErr: Profile;
@@ -25,6 +26,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   constructor(
     private passValidator: PasswordValidatorDirective,
     private route: Router,
+    private errorService: ErrorService,
     private userService: UserDataService
   ) {
     this.signUpFormErr = initializeProfile();
@@ -76,6 +78,8 @@ export class SignupComponent implements OnInit, OnDestroy {
     if (!this.signUpForm) {
       return;
     }
+    //Reset of error/success message and variables
+    this.errorService.resetValues();
     this.userService
       .signUp(this.signUpForm)
       .subscribe(
@@ -85,8 +89,8 @@ export class SignupComponent implements OnInit, OnDestroy {
           }
         },
         (err) => {
-          this.userService.errMess = err;
-          this.userService.errorBoolean = true;
+          this.errorService.message = err;
+          this.errorService.errorBoolean = true;
         }
       )
       .add(() => {

@@ -20,8 +20,6 @@ export const headers = new HttpHeaders({
 export class UserDataService {
   public onPetition: boolean;
   public isAuthenticated: boolean;
-  public errorBoolean: boolean;
-  public errMess: string;
   constructor(private http: HttpClient, private route: Router) {}
 
   setUser(us) {
@@ -177,7 +175,7 @@ export class UserDataService {
   // }
 
   private handleError(error: HttpErrorResponse) {
-    let errorMess: string;
+    let errorMess: String;
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       (errorMess = "An error occurred:"), error.error.message;

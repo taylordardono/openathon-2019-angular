@@ -5,13 +5,6 @@
 
   <div class="form__wrapper">
     <form [formGroup]="editorForm" (ngSubmit)="userEdit()" action="">
-      <mat-card
-        (click)="successEdit = false"
-        data-success
-        class="sign__info"
-        [ngClass]="{ show__sign: successEdit === true }"
-        >Profile updated!</mat-card
-      >
       <mat-form-field appearance="fill">
         <mat-label>Name</mat-label>
         <input

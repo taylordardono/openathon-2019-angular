@@ -8,7 +8,6 @@ import { Observable, throwError } from "rxjs";
 import { catchError, retry, map } from "rxjs/operators";
 import { environment } from "../../environments/environment";
 import { initializeEvent, Event } from "../models/event";
-import { ActivatedRoute } from "@angular/router";
 
 //common headers for eventService
 export const headers = new HttpHeaders({
@@ -19,12 +18,9 @@ export const headers = new HttpHeaders({
 })
 export class EventService {
   onPetition: boolean;
-  errMess: string;
-  errorBoolean: boolean;
   events: Event[];
   activeEvent: boolean;
   constructor(
-    private activatedRoute: ActivatedRoute,
     private http: HttpClient
   ) {}
   getEvents(): Observable<any> {
@@ -79,7 +75,7 @@ export class EventService {
   }
   // Error handling
   private handleError(error: HttpErrorResponse) {
-    let errorMess: string;
+    let errorMess: String;
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       (errorMess = "An error occurred:"), error.error.message;

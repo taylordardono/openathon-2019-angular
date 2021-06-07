@@ -14,6 +14,7 @@ export const validationMessages = {
   passwordNotMatch: "The password dont match",
   matDatepickerParse: "Incorrect format",
 };
+
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

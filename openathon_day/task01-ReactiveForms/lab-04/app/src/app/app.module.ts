@@ -16,6 +16,9 @@ import { ToolbarComponent } from "./toolbar/toolbar.component";
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
 import { ErrorCardComponent } from './error-card/error-card.component';
 
+//Provider across the application
+import {ErrorService} from "./core/error.service";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +36,7 @@ import { ErrorCardComponent } from './error-card/error-card.component';
     LoginModule,
     ProfileModule
   ],
-  providers: [],
+  providers: [ErrorService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

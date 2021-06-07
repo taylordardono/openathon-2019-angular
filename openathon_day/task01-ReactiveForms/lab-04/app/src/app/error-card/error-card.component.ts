@@ -7,13 +7,20 @@ import { Component, Input, OnChanges, OnInit } from "@angular/core";
 })
 export class ErrorCardComponent implements OnInit, OnChanges {
   @Input("isError") isError: boolean;
-  @Input("errorMess") errorMess: string;
+  @Input("message") message: string;
+  @Input("isSuccess") isSuccess: boolean;
   constructor() {}
   public isErrorCard: boolean;
-  public errorMessCard: string;
-  ngOnChanges() {
-    this.errorMessCard = this.errorMess;
-    this.isErrorCard = this.isError;
+  public messageCard: string;
+  public isSuccessfulCard: boolean;
+  ngOnChanges(changes?) {
+    this.messageCard = this.message;
+    this.isErrorCard = changes["isError"]
+      ? changes["isError"].currentValue
+      : false;
+    this.isSuccessfulCard = changes["isSuccess"]
+      ? changes["isSuccess"].currentValue
+      : false;
   }
 
   ngOnInit(): void {}

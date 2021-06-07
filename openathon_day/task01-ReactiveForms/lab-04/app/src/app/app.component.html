@@ -1,7 +1,7 @@
 <div class="body">
   <!--Error card and toolbar will go all across the platform
   so we keep them like that here in the main component-->
-  <oevents-error-card [errorMess]="userService.errMess" [isError]="userService.errorBoolean"></oevents-error-card>
+  <oevents-error-card [isSuccess]="errorService.successBoolean" [message]="errorService.message" [isError]="errorService.errorBoolean"></oevents-error-card>
   <oevents-toolbar></oevents-toolbar>
   <router-outlet></router-outlet>
 </div>

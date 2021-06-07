@@ -66,9 +66,10 @@ mat-icon[data-copyright] {
 }
 
 oevents-error-card {
+  right: 15px;
+  z-index: 10;
   position: absolute;
   top: calc(var(--toolbarH) + 15px);
-  right: 15px;
   mat-card[data-error] {
     background-color: rgba(247, 211, 211, 1);
     color: red;
@@ -164,6 +165,7 @@ div.mat-card-header-text {
   user-select: none;
   transition: opacity 0.3s ease-out;
 }
+
 .show__sign {
   opacity: 1;
 }
