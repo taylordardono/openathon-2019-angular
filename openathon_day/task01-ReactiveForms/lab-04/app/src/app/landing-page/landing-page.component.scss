@@ -2,30 +2,26 @@
 @import "../shared/styles/colors.scss";
 @import "../shared/styles/fonts.scss";
 
-
 .main__container {
   @include container();
-  @include background(
-    "../../assets/images/patt1.png",
-    center,
-    cover
-  );
+  @include background("../../assets/images/patt1.png", center, cover);
   position: relative;
 }
 
-.landing__wrapper{
+.landing__wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.subtitle{
+.subtitle {
   font-family: "Graphik Super";
 }
 
-h1{
+h1 {
   padding: 1rem 1.5rem;
-  background-color: rgba(0,0,0, 0.6);
+  background-color: rgba(0, 0, 0, 0.6);
   border-radius: 1rem;
+  text-align: center;
 }

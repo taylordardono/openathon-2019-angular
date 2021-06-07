@@ -172,13 +172,13 @@ export class AddEditFormComponent implements OnInit, OnDestroy {
             resolve(this.eventService.events);
           }
         });
+        this.eventService.events.forEach((event) => {
+          if (event.id === this.eventID) {
+            selectedEvent = event;
+            return;
+          }
+        });
       }
-      this.eventService.events.forEach((event) => {
-        if (event.id === this.eventID) {
-          selectedEvent = event;
-          return;
-        }
-      });
       let eventPropertyList = Object.keys(this.eventModel);
       eventPropertyList.forEach((eventName) => {
         this.createForm(eventName, user, selectedEvent[eventName]);

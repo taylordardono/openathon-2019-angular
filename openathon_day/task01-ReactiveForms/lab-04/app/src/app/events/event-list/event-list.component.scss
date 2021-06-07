@@ -17,6 +17,7 @@
 .list__wrapper {
   overflow-y: auto;
   max-height: 400px;
+  width: 100%;
   max-width: 600px;
   margin: 0 auto;
   &::-webkit-scrollbar {
@@ -38,7 +39,8 @@
 
 mat-card[data-list-item] {
   margin: 10px 0;
-  height: 113px;
+  height: 110px;
+  overflow: hidden;
 }
 
 mat-card-title,

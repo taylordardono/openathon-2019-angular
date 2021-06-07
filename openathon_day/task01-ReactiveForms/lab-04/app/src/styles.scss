@@ -111,7 +111,8 @@ a:not(p > a) {
   padding: 1rem 1rem;
   margin-left: auto;
   margin-right: auto;
-  width: 50%;
+  width: 100%;
+  max-width: 600px;
   //sign up formulary has different structure
   &:not([data-sign-form], [data-event-form]) {
     max-width: 300px;
@@ -124,7 +125,6 @@ a:not(p > a) {
     }
   }
   &[data-sign-form] {
-    max-width: fit-content;
     form {
       width: 100%;
     }
