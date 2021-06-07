@@ -39,13 +39,11 @@ export class EventService {
       return;
     }
     const url = environment.apiURL + "events";
-    console.log(url);
     const newEvent: Event = initializeEvent(formData);
     this.onPetition = true;
     return this.http.post(url, newEvent, { headers }).pipe(
       retry(3),
       map((ev: Event) => {
-        console.log(ev);
         //We check if the current event is succesfully registered by checking its new id
         if (ev["id"]) {
           return ev;
@@ -69,7 +67,6 @@ export class EventService {
       retry(3),
       map((ev: Event) => {
         //We check if the current user is correctly edited
-        console.log(ev);
         if (ev["id"]) {
           if (ev.title === eventEdit.title && ev.id === eventEdit.id) {
             return eventEdit;

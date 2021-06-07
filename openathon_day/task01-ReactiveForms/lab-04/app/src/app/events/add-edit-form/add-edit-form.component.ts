@@ -20,6 +20,7 @@ export class AddEditFormComponent implements OnInit, OnDestroy {
   succesfullEvent: boolean;
   onPetition: boolean;
   loadedForm: boolean;
+  eventID: string;
   constructor(
     private activatedRoute: ActivatedRoute,
     private eventService: EventService
@@ -91,12 +92,11 @@ export class AddEditFormComponent implements OnInit, OnDestroy {
     if (!this.addContact) {
       return;
     }
-    if (this.activatedRoute.snapshot.params["id"]) {
+    if (this.eventID) {
       const success = this.eventService
-        .editEvent(this.addContact, this.activatedRoute.snapshot.params["id"])
+        .editEvent(this.addContact, this.eventID)
         .subscribe(
           (res: any) => {
-            console.log(res);
             if (res["id"]) {
               this.succesfullEvent = true;
               this.addContact.reset("");
@@ -122,7 +122,6 @@ export class AddEditFormComponent implements OnInit, OnDestroy {
         .addEvent(this.addContact)
         .subscribe(
           (res: any) => {
-            console.log(res);
             if (res["id"]) {
               this.succesfullEvent = true;
               this.addContact.reset("");
@@ -151,14 +150,14 @@ export class AddEditFormComponent implements OnInit, OnDestroy {
     this.eventService.activeEvent = true;
     this.eventModel = initializeEvent();
     this.addContact = new FormGroup({});
-    let eventPropertyList = Object.keys(this.eventModel);
+    this.eventID = this.activatedRoute.snapshot.params["id"];
     const user = JSON.parse(sessionStorage.getItem("user"));
     let selectedEvent: Event = initializeEvent();
     (async () => {
       //We check if is a new event or the edition of an already created one
-      console.log("Before result");
-      if (this.activatedRoute.snapshot.params["id"]) {
+      if (this.eventID) {
         this.eventService.events = await new Promise((resolve, reject) => {
+          //In case events are not loaded, we load them
           if (!this.eventService.events) {
             this.eventService.getEvents().subscribe(
               (events: Event[]) => {
@@ -168,15 +167,19 @@ export class AddEditFormComponent implements OnInit, OnDestroy {
                 reject(err);
               }
             );
+          } else{
+            //If the events are already loaded, we just simply resolve them
+            resolve(this.eventService.events);
           }
         });
       }
       this.eventService.events.forEach((event) => {
-        if (event.id === this.activatedRoute.snapshot.params["id"]) {
+        if (event.id === this.eventID) {
           selectedEvent = event;
           return;
         }
       });
+      let eventPropertyList = Object.keys(this.eventModel);
       eventPropertyList.forEach((eventName) => {
         this.createForm(eventName, user, selectedEvent[eventName]);
       });

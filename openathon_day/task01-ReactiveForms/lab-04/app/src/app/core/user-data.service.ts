@@ -42,13 +42,11 @@ export class UserDataService {
       return;
     }
     const url = environment.apiURL + "users";
-    console.log(url);
     const newUser: User = initializeUser(formData);
     this.onPetition = true;
     return this.http.post(url, newUser, { headers }).pipe(
       retry(3),
       map((us: User) => {
-        console.log(us);
         //We check if the current user is succesfully registered by checking its new id
         if (us["id"]) {
           this.setUser(us);
@@ -66,13 +64,11 @@ export class UserDataService {
       return;
     }
     const url = environment.apiURL + "users?name=" + user.name;
-    console.log(url);
     this.onPetition = true;
     return this.http.get(url, { headers }).pipe(
       retry(3),
       map((us: Array<User>) => {
-        console.log(us);
-        //We dont have any restriction of duplicate users when registering a new one
+        //We dont have any restriction for duplicate user names when registering a new one
         //So we search over all users with the same name and find the one that has a match
         //with the session password
         let usrFound: User;
@@ -111,7 +107,6 @@ export class UserDataService {
       retry(3),
       map((us: User) => {
         //We check if the current user is correctly edited
-        console.log(us);
         if (us["id"]) {
           if (us.name === userEdit.name && us.id === userEdit.id) {
             this.setUser(userEdit);

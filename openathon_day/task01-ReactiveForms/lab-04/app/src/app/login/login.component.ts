@@ -73,7 +73,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       })
       .subscribe(
         (res: any) => {
-          console.log(res);
           if (res["id"]) {
             this.route.navigate(["/profile"]);
           }
