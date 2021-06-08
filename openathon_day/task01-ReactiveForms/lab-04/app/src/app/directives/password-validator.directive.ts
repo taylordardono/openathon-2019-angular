@@ -35,15 +35,4 @@ export class PasswordValidatorDirective implements Validator {
     password1 = control.value;
     return null;
   }
-  // validate2(controlCheck: AbstractControl): ValidationErrors | null {
-  //   if (!controlCheck) {
-  //     return;
-  //   }
-  //   const control = controlCheck;
-  //   password2 = control.value;
-  //   if (password2 !== password1) {
-  //     return { passwordNotMatch: true };
-  //   }
-  //   return null;
-  // }
 }

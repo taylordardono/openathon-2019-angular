@@ -18,7 +18,6 @@ export class AddEditFormComponent implements OnInit, OnDestroy {
   addContact: FormGroup;
   eventModel: Event;
   formChanges: Subscription;
-  onPetition: boolean;
   loadedForm: boolean;
   eventID: String;
   constructor(
@@ -83,7 +82,7 @@ export class AddEditFormComponent implements OnInit, OnDestroy {
       return;
     }
     //Reset of error/success message and variables
-    this.errorService.resetValues();
+    this.errorService.resetActionStateValues();
     if (this.eventID) {
       const success = this.eventService
         .editEvent(this.addContact, this.eventID)
@@ -107,8 +106,7 @@ export class AddEditFormComponent implements OnInit, OnDestroy {
         )
         .add(() => {
           //Finish petition mark for the user view whenever its succesfull or not
-          this.onPetition = false;
-          this.eventService.onPetition = this.onPetition;
+          this.errorService.onPetition = false;
         });
     } else {
       const success = this.eventService
@@ -133,8 +131,7 @@ export class AddEditFormComponent implements OnInit, OnDestroy {
         )
         .add(() => {
           //Finish petition mark for the user view whenever its succesfull or not
-          this.onPetition = false;
-          this.eventService.onPetition = this.onPetition;
+          this.errorService.onPetition = false;
         });
     }
   }

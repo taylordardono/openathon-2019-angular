@@ -33,10 +33,10 @@
         type="submit"
         [disabled]="editorForm.invalid"
       >
-        <mat-icon data-petition *ngIf="onPetition"
+        <mat-icon data-petition *ngIf="errorService.onPetition"
           >autorenew</mat-icon
         >
-        <span *ngIf="!onPetition"> Confirm </span>
+        <span *ngIf="!errorService.onPetition"> Confirm </span>
       </button>
     </form>
   </div>

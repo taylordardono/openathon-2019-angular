@@ -7,6 +7,12 @@ export interface Event {
   addedBy: string;
 }
 
+// export function setEventPropertyFormRestriction(eventProperty, restriction) {
+//   let res = Object.create({eventProperty});
+
+//   return Object.assign(res, { eventProperty: restriction });
+// }
+
 export function initializeEvent(eventForm?): Event {
   let newEvent: Event = {
     id: "",
@@ -14,7 +20,9 @@ export function initializeEvent(eventForm?): Event {
     location: eventForm ? eventForm.get("location").value : "",
     description: eventForm ? eventForm.get("description").value : "",
     addedBy: eventForm ? eventForm.get("addedBy").value : "",
-    date: eventForm ? eventForm.get("date").value.toISOString().split("T")[0] : new Date(),
+    date: eventForm
+      ? eventForm.get("date").value.toISOString().split("T")[0]
+      : new Date(),
   };
   return newEvent;
 }

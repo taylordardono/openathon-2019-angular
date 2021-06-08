@@ -18,7 +18,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
   public editorForm: FormGroup;
   public editorFormErr: User;
   private editorChanges: Subscription;
-  public onPetition: boolean;
   constructor(private errorService: ErrorService, private userService: UserDataService) {
     this.editorFormErr = initializeUser();
     const sessionData = JSON.parse(sessionStorage.getItem("user"));
@@ -77,7 +76,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       return;
     }
     //Reset of error/success message and variables
-    this.errorService.resetValues();
+    this.errorService.resetActionStateValues();
     this.userService
       .userEdit({
         name: this.editorForm.get("name").value,
@@ -99,8 +98,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       )
       .add(() => {
         //Finish petition mark for the user view whenever its succesfull or not
-        this.onPetition = false;
-        this.userService.onPetition = this.onPetition;
+        this.errorService.onPetition = false;
       });
     // try {
     //   const success = await this.userService.userEdit({

@@ -41,8 +41,8 @@
         type="submit"
         [disabled]="loginForm.invalid"
       >
-      <mat-icon data-petition *ngIf="onPetition">autorenew</mat-icon>
-      <span *ngIf="!onPetition">
+      <mat-icon data-petition *ngIf="errorService.onPetition">autorenew</mat-icon>
+      <span *ngIf="!errorService.onPetition">
         Sign in
       </span>
       </button>

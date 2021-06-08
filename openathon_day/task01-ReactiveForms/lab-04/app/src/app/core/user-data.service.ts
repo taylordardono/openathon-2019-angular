@@ -1,14 +1,11 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import {
-  HttpClient,
-  HttpHeaders,
-  HttpErrorResponse,
-} from "@angular/common/http";
-import { Observable, throwError } from "rxjs";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Observable } from "rxjs";
 import { catchError, retry, map } from "rxjs/operators";
 import { initializeUser, User } from "../models/user";
 import { environment } from "../../environments/environment";
+import {ErrorService} from "./error.service";
 
 //common headers for userService
 export const headers = new HttpHeaders({
@@ -18,9 +15,8 @@ export const headers = new HttpHeaders({
   providedIn: "root",
 })
 export class UserDataService {
-  public onPetition: boolean;
   public isAuthenticated: boolean;
-  constructor(private http: HttpClient, private route: Router) {}
+  constructor(private errorService: ErrorService, private http: HttpClient, private route: Router) {}
 
   setUser(us) {
     sessionStorage.setItem(
@@ -36,12 +32,12 @@ export class UserDataService {
 
   signUp(formData): Observable<any> {
     //Simple check to avoid multiple petitions from the user
-    if (this.onPetition) {
+    if (this.errorService.onPetition) {
       return;
     }
     const url = environment.apiURL + "users";
     const newUser: User = initializeUser(formData);
-    this.onPetition = true;
+    this.errorService.onPetition = true;
     return this.http.post(url, newUser, { headers }).pipe(
       retry(3),
       map((us: User) => {
@@ -52,17 +48,17 @@ export class UserDataService {
         }
         return "User not registered";
       }),
-      catchError(this.handleError)
+      catchError(this.errorService.handleError)
     );
   }
 
   logIn(user): Observable<any> {
     //Simple check to avoid multiple petitions from the user
-    if (this.onPetition) {
+    if (this.errorService.onPetition) {
       return;
     }
     const url = environment.apiURL + "users?name=" + user.name;
-    this.onPetition = true;
+    this.errorService.onPetition = true;
     return this.http.get(url, { headers }).pipe(
       retry(3),
       map((us: Array<User>) => {
@@ -79,7 +75,7 @@ export class UserDataService {
         });
         return usrFound.id ? usrFound : "Password not valid.";
       }),
-      catchError(this.handleError)
+      catchError(this.errorService.handleError)
     );
   }
 
@@ -91,7 +87,7 @@ export class UserDataService {
 
   userEdit(user): Observable<any> {
     //Simple check to avoid multiple petitions from the user
-    if (this.onPetition) {
+    if (this.errorService.onPetition) {
       return;
     }
     const currentUser = JSON.parse(sessionStorage.getItem("user"));
@@ -100,7 +96,7 @@ export class UserDataService {
     userEdit.id = currentUser.id;
     userEdit.password = currentUser.password;
     const url = environment.apiURL + "users/" + user.id;
-    this.onPetition = true;
+    this.errorService.onPetition = true;
     return this.http.put(url, userEdit, { headers }).pipe(
       retry(3),
       map((us: User) => {
@@ -113,86 +109,7 @@ export class UserDataService {
         }
         return "User not updated";
       }),
-      catchError(this.handleError)
-    );
-  }
-
-  //Example of request handle as a Promise
-  // userEdit(user): Promise<boolean> {
-  //   const currentUser = JSON.parse(sessionStorage.getItem("user"));
-  //   const url =
-  //     environment.apiURL +
-  //     "users?" +
-  //     "name=" +
-  //     currentUser.name +
-  //     "&id=" +
-  //     user.id;
-  //   console.log(url);
-  //   return new Promise((resolve, reject) => {
-  //     this.http
-  //       .put(url, user.name, { headers })
-  //       .pipe(
-  //         retry(3),
-  //         map((us: Array<User>) => {
-  //           //We check if the current user is registered by selecting the last one of the
-  //           //users array
-  //           let editedUser: User = initializeUser();
-  //           if (us.length > 0) {
-  //             us.forEach((usr) => {
-  //               if (usr.name == user.name && usr.id == user.id) {
-  //                 sessionStorage.setItem(
-  //                   "user",
-  //                   JSON.stringify({
-  //                     user: usr.name,
-  //                     id: usr.id,
-  //                   })
-  //                 );
-  //                 editedUser = usr;
-  //                 return;
-  //               }
-  //             });
-  //           }
-  //           if (editedUser.name) {
-  //             return editedUser;
-  //           }
-  //           return "User not updated";
-  //         })
-  //       )
-  //       .subscribe(
-  //         (d) => {
-  //           console.log(d);
-  //           if (d) {
-  //             resolve(true);
-  //           } else {
-  //             reject(false);
-  //           }
-  //         },
-  //         (err) => {
-  //           catchError(this.handleError);
-  //         }
-  //       );
-  //   });
-  // }
-
-  private handleError(error: HttpErrorResponse) {
-    let errorMess: String;
-    if (error.error instanceof ErrorEvent) {
-      // A client-side or network error occurred. Handle it accordingly.
-      (errorMess = "An error occurred:"), error.error.message;
-    } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong,
-      errorMess =
-        `Backend returned code ${error.status}, ` + `body was: ${error.error}`;
-    }
-    // return an observable with a user-facing error message
-    return throwError(
-      "Something bad happened:" +
-        "\n" +
-        errorMess +
-        ". Please try again later." +
-        "\n" +
-        "Click this displayed message for confirm"
+      catchError(this.errorService.handleError)
     );
   }
 }

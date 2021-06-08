@@ -13,14 +13,19 @@ export class ErrorCardComponent implements OnInit, OnChanges {
   public isErrorCard: boolean;
   public messageCard: string;
   public isSuccessfulCard: boolean;
-  ngOnChanges(changes?) {
+
+  captureActionState(newState?) {
     this.messageCard = this.message;
-    this.isErrorCard = changes["isError"]
-      ? changes["isError"].currentValue
+    this.isErrorCard = newState["isError"]
+      ? newState["isError"].currentValue
       : false;
-    this.isSuccessfulCard = changes["isSuccess"]
-      ? changes["isSuccess"].currentValue
+    this.isSuccessfulCard = newState["isSuccess"]
+      ? newState["isSuccess"].currentValue
       : false;
+  }
+  
+  ngOnChanges(changes?) {
+    this.captureActionState(changes);
   }
 
   ngOnInit(): void {}
