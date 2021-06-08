@@ -12,3 +12,12 @@ export function initializeUser(user?): User {
   };
   return newUser;
 }
+
+export function initializeUserNotForm({ name }, { id, password }): User {
+  let newUser: User = {
+    name: name ? name : "",
+    password: password ? password : "",
+    id: id ? id : "",
+  };
+  return newUser;
+}

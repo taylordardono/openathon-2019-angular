@@ -79,30 +79,7 @@ export class SignupComponent implements OnInit, OnDestroy {
     }
     //Reset of error/success message and variables
     this.errorService.resetActionStateValues();
-    this.userService
-      .signUp(this.signUpForm)
-      .subscribe(
-        (res: any) => {
-          if (res["id"]) {
-            this.route.navigate(["/profile"]);
-          }
-        },
-        (err) => {
-          this.errorService.message = err;
-          this.errorService.errorBoolean = true;
-        }
-      )
-      .add(() => {
-        //Finish petition mark for the user view whenever its succesfull or not
-        this.errorService.onPetition = false;
-      });
-
-    // try {
-    //   const success = await this.userService.signUp(this.signUpForm);
-    //   this.route.navigate(["/profile"]);
-    // } catch (error) {
-    //   this.unSuccessSignUp = true;
-    // }
+    this.userService.signUp(this.signUpForm);
   }
 
   public showPassword() {

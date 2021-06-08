@@ -87,33 +87,26 @@
       "description": "ñsdfsñdf´sdfa´sd,fasñdf,sf",
       "addedBy": "user01",
       "date": "2021-06-07"
+    },
+    {
+      "id": "yaKx4_B",
+      "title": "title clean code check",
+      "location": "pamplona",
+      "description": "description for the new check on clean code",
+      "addedBy": "user01",
+      "date": "2021-06-08"
     }
   ],
   "users": [
     {
-      "name": "user02",
-      "password": "654321",
-      "id": "2"
-    },
-    {
-      "name": "user03",
-      "password": "12345678",
-      "id": "Fx5lIAu"
+      "name": "user00",
+      "password": "$2a$10$eS7FS6aa0ksC1kNKlSac8uZIi5PSfz7H4aMcHdqheJN6EIfZ2TE3C",
+      "id": 1
     },
     {
       "name": "user01",
-      "password": "12345678",
-      "id": "uiaswBk"
-    },
-    {
-      "name": "user01",
-      "password": "87654321",
-      "id": "vnAJ6jZ"
-    },
-    {
-      "name": "user05",
-      "password": "87654321",
-      "id": "FE7mqL1"
+      "password": "$2a$10$WBkqULGYv1kibr8oFcDjq.gBS2T2ywTXeWClna9X1F0AKB6QOV/i2",
+      "id": 2
     }
   ]
 }

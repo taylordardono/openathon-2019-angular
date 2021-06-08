@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Event } from "../../models/event";
-
 import { EventService } from "../../core/event.service";
 import { animationTask } from "src/app/shared/animations/animations";
 import { Router } from "@angular/router";

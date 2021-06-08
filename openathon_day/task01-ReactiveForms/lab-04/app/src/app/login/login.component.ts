@@ -18,7 +18,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
   loginFormErr: Object = {};
   formChanges: Subscription;
-  constructor(private route: Router, private userService: UserDataService, public errorService: ErrorService) {
+  constructor(
+    private route: Router,
+    private userService: UserDataService,
+    public errorService: ErrorService
+  ) {
     this.loginFormErr = initializeUser();
     this.loginForm = new FormGroup({
       name: new FormControl("", Validators.required),
@@ -59,37 +63,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
     //Reset of error/success message and variables
     this.errorService.resetActionStateValues();
-    this.userService
-      .logIn({
-        name: this.loginForm.get("name").value,
-        password: this.loginForm.get("password").value,
-      })
-      .subscribe(
-        (res: any) => {
-          if (res["id"]) {
-            this.route.navigate(["/profile"]);
-          }
-        },
-        (err) => {
-          this.loginForm.get("password").reset("");
-          this.errorService.message = err;
-          this.errorService.errorBoolean = true;
-        }
-      )
-      .add(() => {
-        //Finish petition mark for the user view whenever its succesfull or not
-        this.errorService.onPetition = false;
-      });
-    // try {
-    //   const success = await this.userService.logIn({
-    //     name: this.loginForm.get("name").value,
-    //     password: this.loginForm.get("password").value,
-    //   });
-    //   this.route.navigate(["/events", "add-event"]);
-    // } catch (error) {
-    //   this.unsuccessLogin = true;
-    //   this.loginForm.get("password").reset("");
-    // }
+    this.userService.logIn({
+      name: this.loginForm.get("name").value,
+      password: this.loginForm.get("password").value,
+    });
+    this.loginForm.get("password").reset("");
   }
 
   ngOnInit() {}

@@ -24,8 +24,7 @@ export class AddEditFormComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private eventService: EventService,
     private errorService: ErrorService
-  ) {
-  }
+  ) {}
 
   private createForm(formName: any, user, value?): void {
     if (this.addContact.contains(formName)) {
@@ -55,7 +54,7 @@ export class AddEditFormComponent implements OnInit, OnDestroy {
     this.addContact.addControl(formName, newAddedForm);
   }
 
-  private onValueChanged(changes?: any) {
+  private checkForFormErrors(changes?: any) {
     if (!this.addContact) {
       return;
     }
@@ -84,55 +83,9 @@ export class AddEditFormComponent implements OnInit, OnDestroy {
     //Reset of error/success message and variables
     this.errorService.resetActionStateValues();
     if (this.eventID) {
-      const success = this.eventService
-        .editEvent(this.addContact, this.eventID)
-        .subscribe(
-          (res: any) => {
-            if (res["id"]) {
-              this.errorService.message = "Event edited!";
-              this.errorService.successBoolean = true;
-              // this.addContact.reset("");
-              // let eventPropertyList = Object.keys(this.eventModel);
-              // eventPropertyList.forEach((event) => {
-              //   this.addContact.get(event).markAsUntouched();
-              // });
-              // this.route.navigate(["/events", "event-list"]);
-            }
-          },
-          (err) => {
-            this.errorService.message = err;
-            this.errorService.errorBoolean = true;
-          }
-        )
-        .add(() => {
-          //Finish petition mark for the user view whenever its succesfull or not
-          this.errorService.onPetition = false;
-        });
+      this.eventService.editEvent(this.addContact, this.eventID);
     } else {
-      const success = this.eventService
-        .addEvent(this.addContact)
-        .subscribe(
-          (res: any) => {
-            if (res["id"]) {
-              this.errorService.message = "Event created!";
-              this.errorService.successBoolean = true;
-              // this.addContact.reset("");
-              // let eventPropertyList = Object.keys(this.eventModel);
-              // eventPropertyList.forEach((event) => {
-              //   this.addContact.get(event).markAsUntouched();
-              // });
-              // this.route.navigate(["/events", "event-list"]);
-            }
-          },
-          (err) => {
-            this.errorService.message = err;
-            this.errorService.errorBoolean = true;
-          }
-        )
-        .add(() => {
-          //Finish petition mark for the user view whenever its succesfull or not
-          this.errorService.onPetition = false;
-        });
+      this.eventService.addEvent(this.addContact);
     }
   }
 
@@ -175,7 +128,7 @@ export class AddEditFormComponent implements OnInit, OnDestroy {
         this.createForm(eventName, user, selectedEvent[eventName]);
       });
       this.formChanges = this.addContact.valueChanges.subscribe((data) =>
-        this.onValueChanged(data)
+        this.checkForFormErrors(data)
       );
       this.loadedForm = true;
     })();

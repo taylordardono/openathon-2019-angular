@@ -28,9 +28,29 @@ export class EventService {
     if (this.errorService.onPetition) {
       return;
     }
-    const url = environment.apiURL + "events";
-    const newEvent: Event = initializeEvent(formData);
     this.errorService.onPetition = true;
+    const newEvent: Event = initializeEvent(formData);
+    this.addEventBack(newEvent)
+      .subscribe(
+        (res: any) => {
+          if (res["id"]) {
+            this.errorService.message = "Event created!";
+            this.errorService.successBoolean = true;
+          }
+        },
+        (err) => {
+          this.errorService.message = err;
+          this.errorService.errorBoolean = true;
+        }
+      )
+      .add(() => {
+        //Finish petition mark for the user view whenever its succesfull or not
+        this.errorService.onPetition = false;
+      });
+  }
+
+  addEventBack(newEvent): Observable<any> {
+    const url = environment.apiURL + "events";
     return this.http.post(url, newEvent, { headers }).pipe(
       retry(3),
       map((ev: Event) => {
@@ -44,23 +64,41 @@ export class EventService {
     );
   }
 
-  editEvent(formData, eventID): Observable<any> {
+  editEvent(formData, eventID) {
     //Simple check to avoid multiple petitions from the user
     if (this.errorService.onPetition) {
       return;
     }
+    this.errorService.onPetition = true;
     let eventEdit: Event = initializeEvent(formData);
     eventEdit.id = eventID;
+    this.editEventBack(eventEdit)
+      .subscribe(
+        (res: any) => {
+          if (res["id"]) {
+            this.errorService.message = "Event edited!";
+            this.errorService.successBoolean = true;
+          }
+        },
+        (err) => {
+          this.errorService.message = err;
+          this.errorService.errorBoolean = true;
+        }
+      )
+      .add(() => {
+        //Finish petition mark for the user view whenever its succesfull or not
+        this.errorService.onPetition = false;
+      });
+  }
+
+  editEventBack(eventEdit): Observable<any> {
     const url = environment.apiURL + "events/" + eventEdit.id;
-    this.errorService.onPetition = true;
     return this.http.put(url, eventEdit, { headers }).pipe(
       retry(3),
       map((ev: Event) => {
         //We check if the current user is correctly edited
-        if (ev["id"]) {
-          if (ev.title === eventEdit.title && ev.id === eventEdit.id) {
-            return eventEdit;
-          }
+        if (ev.id && ev.title === eventEdit.title && ev.id === eventEdit.id) {
+          return eventEdit;
         }
         return "Event not updated";
       }),

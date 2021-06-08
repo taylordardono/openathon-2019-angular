@@ -18,7 +18,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
   public editorForm: FormGroup;
   public editorFormErr: User;
   private editorChanges: Subscription;
-  constructor(private errorService: ErrorService, private userService: UserDataService) {
+  constructor(
+    private errorService: ErrorService,
+    private userService: UserDataService
+  ) {
     this.editorFormErr = initializeUser();
     const sessionData = JSON.parse(sessionStorage.getItem("user"));
     this.editorForm = new FormGroup({
@@ -71,45 +74,20 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.editorMode = false;
   }
 
-  public userEdit() {
+  public async userEdit() {
     if (!this.editorForm) {
       return;
     }
     //Reset of error/success message and variables
     this.errorService.resetActionStateValues();
-    this.userService
-      .userEdit({
-        name: this.editorForm.get("name").value,
-        id: this.editorForm.get("id").value,
-      })
-      .subscribe(
-        (res: any) => {
-          if (res["id"]) {
-            this.errorService.message = "Profile updated!";
-            this.errorService.successBoolean = true;
-            this.editorMode = false;
-            this.editorForm.get("name").disable();
-          }
-        },
-        (err) => {
-          this.errorService.message = err;
-          this.errorService.errorBoolean = true;
-        }
-      )
-      .add(() => {
-        //Finish petition mark for the user view whenever its succesfull or not
-        this.errorService.onPetition = false;
-      });
-    // try {
-    //   const success = await this.userService.userEdit({
-    //     name: this.editorForm.get("name").value,
-    //     id: this.editorForm.get("id").value,
-    //   });
-    //   this.successEdit = true;
-    //   this.editorMode = false;
-    // } catch (error) {
-    //   this.unsuccessEdit = true;
-    // }
+    const edition = await this.userService.userEdit({
+      name: this.editorForm.get("name").value,
+      id: this.editorForm.get("id").value,
+    });
+    if (edition) {
+      this.editorMode = false;
+      this.editorForm.get("name").disable();
+    }
   }
 
   ngOnInit() {}

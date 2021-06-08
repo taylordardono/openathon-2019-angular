@@ -9,6 +9,18 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false,
+    "crypto": false,
+    "stream": false,
+    "http": false,
+    "tls": false,
+    "zlib": false,
+    "https": false,
+    "net": false
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "^11.2.14",
@@ -21,6 +33,7 @@
     "@angular/platform-browser": "~11.2.14",
     "@angular/platform-browser-dynamic": "~11.2.14",
     "@angular/router": "~11.2.14",
+    "bcryptjs": "^2.4.3",
     "core-js": "^2.5.4",
     "rxjs": "~6.6.7",
     "tslib": "^2.0.0",
