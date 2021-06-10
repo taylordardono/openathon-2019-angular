@@ -1,8 +1,8 @@
-<div class="main__container">
+<div class="main-container">
   <div class="section-title">
     <h1 @headerIn>Login</h1>
   </div>
-  <div class="form__wrapper">
+  <div class="form-wrapper">
     <form [formGroup]="loginForm" (ngSubmit)="userLogin()" action="">
       <mat-form-field
         [hintLabel]="loginForm.get('name').pristine ? 'User name' : ''"

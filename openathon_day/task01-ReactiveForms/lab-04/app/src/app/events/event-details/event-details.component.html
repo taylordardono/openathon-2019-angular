@@ -1,15 +1,15 @@
-<div class="main__container">
+<div class="main-container">
   <div @headerIn class="section-title d-flex">
     <h1>Events</h1>
     <h4>\Detail</h4>
   </div>
-  <div @detailIn class="detail__wrapper">
+  <div @detailIn class="detail-wrapper">
     <button (click)="goToEditionMode()" *ngIf="authorizedEditor" mat-raised-button type="button">
       <mat-icon>create</mat-icon
       >
       <span>Edit</span>
     </button>
-    <div class="event__wrapper">
+    <div class="event-wrapper">
       <mat-card data-event-detail *ngIf="event">
         <mat-card-header>
           <mat-card-title>

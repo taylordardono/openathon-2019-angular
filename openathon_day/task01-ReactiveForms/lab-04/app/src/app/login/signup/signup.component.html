@@ -1,8 +1,8 @@
-<div class="main__container">
+<div class="main-container">
   <div class="section-title">
     <h1 @headerIn>Sign Up</h1>
   </div>
-  <div data-sign-form class="form__wrapper">
+  <div data-sign-form class="form-wrapper">
     <form [formGroup]="signUpForm" (ngSubmit)="userSignUp()" action="">
       <mat-form-field
         [hintLabel]="signUpForm.get('name').pristine ? 'User name' : ''"
@@ -20,7 +20,7 @@
           signUpFormErr["name"]
         }}</mat-error>
       </mat-form-field>
-      <div class="password__wrapper">
+      <div class="password-wrapper">
         <mat-form-field
           [hintLabel]="signUpForm.get('password').pristine ? 'Password' : ''"
           appearance="fill"

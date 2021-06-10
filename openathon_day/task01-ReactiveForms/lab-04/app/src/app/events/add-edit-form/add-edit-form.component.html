@@ -1,4 +1,4 @@
-<div class="main__container">
+<div class="main-container">
   <div class="section-title">
     <h1 @headerIn>Event-er</h1>
   </div>
@@ -6,12 +6,12 @@
     @listIn
     *ngIf="loadedForm"
     data-event-form
-    class="form__wrapper"
+    class="form-wrapper"
     [formGroup]="addContact"
     (ngSubmit)="setEvent()"
     action=""
   >
-    <div class="location__wrapper">
+    <div class="location-wrapper">
       <mat-form-field
         data-event-title
         [hintLabel]="addContact.get('title').pristine ? 'Min 2 characters' : ''"

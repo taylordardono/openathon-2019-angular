@@ -1,0 +1,9 @@
+<div @listIn @addOut class="ad-container d-flex">
+  <img [src]="ad.imageRef ? ad.imageRef : '../../../assets/images/default.jpg'" />
+  <aside>
+    <h4>{{ ad.name }}</h4>
+    <p>
+      {{ ad.description }}
+    </p>
+  </aside>
+</div>

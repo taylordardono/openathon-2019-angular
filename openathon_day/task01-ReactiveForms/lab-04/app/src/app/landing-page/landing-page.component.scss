@@ -2,13 +2,13 @@
 @import "../shared/styles/colors.scss";
 @import "../shared/styles/fonts.scss";
 
-.main__container {
+.main-container {
   @include container();
   @include background("../../assets/images/patt1.png", center, cover);
   position: relative;
 }
 
-.landing__wrapper {
+.landing-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -24,4 +24,12 @@ h1 {
   background-color: rgba(0, 0, 0, 0.6);
   border-radius: 1rem;
   text-align: center;
+}
+
+.ad-footer {
+  bottom: 0;
+  width: 100%;
+  position: absolute;
+  height: var(--toolbarH);
+  background-color: $black;
 }

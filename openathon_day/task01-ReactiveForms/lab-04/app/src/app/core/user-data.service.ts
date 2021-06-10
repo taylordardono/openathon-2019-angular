@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { catchError, retry, map } from "rxjs/operators";
-import { initializeUser, initializeUserNotForm, User } from "../models/user";
+import { initializeUser, initializeUserNotForm, User } from "../models/user.model";
 import { environment } from "../../environments/environment";
 import { ErrorService } from "./error.service";
 import * as bcrypt from "bcryptjs";

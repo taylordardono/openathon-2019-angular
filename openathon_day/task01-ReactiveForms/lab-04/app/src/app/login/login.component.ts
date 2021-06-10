@@ -4,15 +4,15 @@ import { Router } from "@angular/router";
 import { UserDataService } from "../core/user-data.service";
 import { ErrorService } from "../core/error.service";
 import { validationMessages } from "../../environments/environment";
-import { initializeUser } from "../models/user";
-import { animationTask } from "../shared/animations/animations";
+import { initializeUser } from "../models/user.model";
+import { oeventsAnimations } from "../shared/animations/animations";
 import { Subscription } from "rxjs";
 
 @Component({
   selector: "oevents-login",
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.scss"],
-  animations: [animationTask.headerIn],
+  animations: [oeventsAnimations.headerIn],
 })
 export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
@@ -29,11 +29,11 @@ export class LoginComponent implements OnInit, OnDestroy {
       password: new FormControl("", Validators.required),
     });
     this.formChanges = this.loginForm.valueChanges.subscribe((data) =>
-      this.onValueChanged(data)
+      this.checkValidForm(data)
     );
   }
 
-  private onValueChanged(changes?: any) {
+  private checkValidForm(changes?: any) {
     if (!this.loginForm) {
       return;
     }

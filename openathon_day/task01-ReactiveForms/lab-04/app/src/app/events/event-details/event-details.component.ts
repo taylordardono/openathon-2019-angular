@@ -1,14 +1,14 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { EventService } from "src/app/core/event.service";
-import { animationTask } from "src/app/shared/animations/animations";
-import { Event } from "../../models/event";
+import { oeventsAnimations } from "src/app/shared/animations/animations";
+import { Event } from "../../models/event.model";
 
 @Component({
   selector: "oevents-event-details",
   templateUrl: "./event-details.component.html",
   styleUrls: ["./event-details.component.scss"],
-  animations: [animationTask.headerIn, animationTask.detailIn],
+  animations: [oeventsAnimations.headerIn, oeventsAnimations.detailIn],
 })
 export class EventDetailsComponent implements OnInit, OnDestroy {
   event: Event;

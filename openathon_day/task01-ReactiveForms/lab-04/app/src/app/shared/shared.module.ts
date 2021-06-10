@@ -13,9 +13,14 @@ import { MatInputModule } from "@angular/material/input";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatNativeDateModule } from "@angular/material/core";
 import { ReactiveFormsModule } from "@angular/forms";
+//Directives
 import { PasswordValidatorDirective } from "../directives/password-validator.directive";
+import { DynamicComponentDirective } from "../directives/dynamic-component.directive";
 @NgModule({
-  declarations: [PasswordValidatorDirective],
+  declarations: [
+    PasswordValidatorDirective,
+    DynamicComponentDirective
+  ],
   imports: [
     BrowserAnimationsModule,
     MatToolbarModule,
@@ -42,7 +47,7 @@ import { PasswordValidatorDirective } from "../directives/password-validator.dir
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
   entryComponents: [],
 })

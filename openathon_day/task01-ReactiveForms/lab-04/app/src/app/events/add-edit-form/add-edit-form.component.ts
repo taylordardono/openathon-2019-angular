@@ -1,18 +1,18 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { Event, initializeEvent } from "../../models/event";
+import { Event, initializeEvent } from "../../models/event.model";
 import { validationMessages } from "../../../environments/environment";
 import { Subscription } from "rxjs";
 import { EventService } from "src/app/core/event.service";
 import { ErrorService } from "src/app/core/error.service";
-import { animationTask } from "src/app/shared/animations/animations";
+import { oeventsAnimations } from "src/app/shared/animations/animations";
 import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "oevents-add-edit-form",
   templateUrl: "./add-edit-form.component.html",
   styleUrls: ["./add-edit-form.component.scss"],
-  animations: [animationTask.headerIn, animationTask.listIn],
+  animations: [oeventsAnimations.headerIn, oeventsAnimations.listIn],
 })
 export class AddEditFormComponent implements OnInit, OnDestroy {
   addContact: FormGroup;
@@ -54,7 +54,7 @@ export class AddEditFormComponent implements OnInit, OnDestroy {
     this.addContact.addControl(formName, newAddedForm);
   }
 
-  private checkForFormErrors(changes?: any) {
+  private checkValidForm(changes?: any) {
     if (!this.addContact) {
       return;
     }
@@ -128,7 +128,7 @@ export class AddEditFormComponent implements OnInit, OnDestroy {
         this.createForm(eventName, user, selectedEvent[eventName]);
       });
       this.formChanges = this.addContact.valueChanges.subscribe((data) =>
-        this.checkForFormErrors(data)
+        this.checkValidForm(data)
       );
       this.loadedForm = true;
     })();

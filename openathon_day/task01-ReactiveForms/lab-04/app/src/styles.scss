@@ -106,7 +106,7 @@ a:not(p > a) {
   color: $acn-green;
 }
 
-.form__wrapper {
+.form-wrapper {
   background-color: rgba($color: $gray-white, $alpha: 1);
   border-radius: 9px;
   padding: 1rem 1rem;
@@ -168,4 +168,11 @@ div.mat-card-header-text {
 
 .show__sign {
   opacity: 1;
+}
+
+.ad-container {
+  left: 15px;
+  z-index: 10;
+  position: absolute;
+  top: calc(var(--toolbarH) + 15px);
 }

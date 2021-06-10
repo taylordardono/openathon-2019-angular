@@ -4,14 +4,14 @@ import { Subscription } from "rxjs";
 import { validationMessages } from "src/environments/environment";
 import { UserDataService } from "../core/user-data.service";
 import { ErrorService } from "../core/error.service";
-import { initializeUser, User } from "../models/user";
-import { animationTask } from "../shared/animations/animations";
+import { initializeUser, User } from "../models/user.model";
+import { oeventsAnimations } from "../shared/animations/animations";
 
 @Component({
   selector: "oevents-profile",
   templateUrl: "./profile.component.html",
   styleUrls: ["./profile.component.scss"],
-  animations: [animationTask.headerIn],
+  animations: [oeventsAnimations.headerIn],
 })
 export class ProfileComponent implements OnInit, OnDestroy {
   public editorMode: boolean;
@@ -32,11 +32,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
       id: new FormControl({ value: sessionData.id, disabled: true }),
     });
     this.editorChanges = this.editorForm.valueChanges.subscribe((changes) => {
-      this.onValueChanges(changes);
+      this.checkValidForm(changes);
     });
   }
 
-  onValueChanges(changes?) {
+  checkValidForm(changes?) {
     if (!this.editorForm) {
       return;
     }

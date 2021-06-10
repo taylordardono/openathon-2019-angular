@@ -1,20 +1,18 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
 import { UserDataService } from "../../core/user-data.service";
 import { ErrorService } from "../../core/error.service";
 import { validationMessages } from "../../../environments/environment";
-import { animationTask } from "../../shared/animations/animations";
+import { oeventsAnimations } from "../../shared/animations/animations";
 import { Subscription } from "rxjs";
-import { initializeProfile, Profile } from "src/app/models/profile";
+import { initializeProfile, Profile } from "src/app/models/profile.model";
 import { PasswordValidatorDirective } from "src/app/directives/password-validator.directive";
 
 @Component({
   selector: "oevents-signup",
   templateUrl: "./signup.component.html",
   styleUrls: ["./signup.component.scss"],
-  animations: [animationTask.headerIn],
-  providers: [PasswordValidatorDirective],
+  animations: [oeventsAnimations.headerIn]
 })
 export class SignupComponent implements OnInit, OnDestroy {
   showPass: boolean;
@@ -24,7 +22,6 @@ export class SignupComponent implements OnInit, OnDestroy {
   signUpFormErr: Profile;
   constructor(
     private passValidator: PasswordValidatorDirective,
-    private route: Router,
     public errorService: ErrorService,
     private userService: UserDataService
   ) {
@@ -43,11 +40,11 @@ export class SignupComponent implements OnInit, OnDestroy {
       ]),
     });
     this.formChanges = this.signUpForm.valueChanges.subscribe((data) => {
-      this.onValueChanges(data);
+      this.checkValidForm(data);
     });
   }
 
-  private onValueChanges(changes?: any) {
+  private checkValidForm(changes?: any) {
     if (!this.signUpForm) {
       return;
     }

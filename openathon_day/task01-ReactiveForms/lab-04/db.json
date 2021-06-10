@@ -1,4 +1,23 @@
-{
+{ "ads": [
+  {
+    "name": "Essential Course Angular",
+    "imageRef": "../../../assets/images/james-harrison-vpOeXr5wmR4-unsplash.jpg",
+    "description": "Check out this new course for beginners",
+    "id": 11
+  },
+  {
+    "name": "Key Course Angular",
+    "imageRef": "../../../assets/images/fotis-fotopoulos-DuHKoV44prg-unsplash.jpg",
+    "description": "Time for settle down all your knowledge with this course for better code practises",
+    "id": 21
+  },
+  {
+    "name": "Ultimate Course Angular",
+    "imageRef": "../../../assets/images/fotis-fotopoulos-6sAl6aQ4OWI-unsplash.jpg",
+    "description": "Ready for taking your programmer skills to the next level?",
+    "id": 31
+  }
+],
   "events": [
     {
       "id": "0",

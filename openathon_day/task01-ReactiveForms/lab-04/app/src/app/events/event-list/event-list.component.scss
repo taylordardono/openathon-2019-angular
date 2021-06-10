@@ -1,7 +1,7 @@
 @import "../../shared/styles/variables.scss";
 @import "../../shared/styles/colors.scss";
 
-.main__container {
+.main-container {
   @include container();
   @include background(
     "../../../assets/images/jason-wong-PBNbMX6jtBM-unsplash.jpg",
@@ -14,7 +14,7 @@
   justify-items: center;
 }
 
-.list__wrapper {
+.list-wrapper {
   overflow-y: auto;
   max-height: 400px;
   width: 100%;

@@ -1,7 +1,7 @@
 @import "../../shared/styles/variables.scss";
 @import "../../shared/styles/colors.scss";
 
-.main__container {
+.main-container {
   @include container();
   @include background(
     "../../../assets/images/denise-jans-5vGeVxQq9Vs-unsplash.jpg",
@@ -14,12 +14,12 @@
   justify-items: center;
 }
 
-.detail__wrapper{
+.detail-wrapper{
   width: 600px;
   margin: 0 auto;
 }
 
-.event__wrapper {
+.event-wrapper {
   overflow-y: auto;
   max-height: 400px;
   &::-webkit-scrollbar {

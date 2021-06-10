@@ -1,14 +1,14 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { Event } from "../../models/event";
+import { Event } from "../../models/event.model";
 import { EventService } from "../../core/event.service";
-import { animationTask } from "src/app/shared/animations/animations";
+import { oeventsAnimations } from "src/app/shared/animations/animations";
 import { Router } from "@angular/router";
 
 @Component({
   selector: "oevents-event-list",
   templateUrl: "./event-list.component.html",
   styleUrls: ["./event-list.component.scss"],
-  animations: [animationTask.headerIn, animationTask.listIn],
+  animations: [oeventsAnimations.headerIn, oeventsAnimations.listIn],
 })
 export class EventListComponent implements OnInit, OnDestroy {
   events: Event[];

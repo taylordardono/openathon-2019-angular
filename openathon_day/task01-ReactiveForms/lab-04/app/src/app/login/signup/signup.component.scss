@@ -1,7 +1,7 @@
 @import "../../shared/styles/variables.scss";
 @import "../../shared/styles/colors.scss";
 
-.main__container {
+.main-container {
   @include container();
   @include background(
     "../../../assets/images/he-junhui-gUGhVBWgJpU-unsplash.jpg",
@@ -11,7 +11,7 @@
   position: relative;
 }
 
-.password__wrapper {
+.password-wrapper {
   width: 100%;
 }
 

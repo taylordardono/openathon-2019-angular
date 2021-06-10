@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { catchError, retry, map } from "rxjs/operators";
 import { environment } from "../../environments/environment";
-import { initializeEvent, Event } from "../models/event";
+import { initializeEvent, Event } from "../models/event.model";
 import { ErrorService } from "./error.service";
 
 //common headers for eventService

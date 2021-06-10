@@ -1,6 +1,6 @@
 @import "../shared/styles/variables.scss";
 
-.main__container{
+.main-container{
     @include container();
     @include background("../../assets/images/patt4.png", center, contain)
 }
