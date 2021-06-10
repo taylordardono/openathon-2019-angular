@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
 
 //Angular material
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatButtonModule } from "@angular/material/button";
 import { MatListModule } from "@angular/material/list";
@@ -17,12 +17,9 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { PasswordValidatorDirective } from "../directives/password-validator.directive";
 import { DynamicComponentDirective } from "../directives/dynamic-component.directive";
 @NgModule({
-  declarations: [
-    PasswordValidatorDirective,
-    DynamicComponentDirective
-  ],
+  declarations: [PasswordValidatorDirective, DynamicComponentDirective],
   imports: [
-    BrowserAnimationsModule,
+    CommonModule,
     MatToolbarModule,
     MatButtonModule,
     MatListModule,
@@ -36,7 +33,7 @@ import { DynamicComponentDirective } from "../directives/dynamic-component.direc
     ReactiveFormsModule,
   ],
   exports: [
-    BrowserAnimationsModule,
+    CommonModule,
     MatToolbarModule,
     MatButtonModule,
     MatListModule,
@@ -47,7 +44,7 @@ import { DynamicComponentDirective } from "../directives/dynamic-component.direc
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   entryComponents: [],
 })
