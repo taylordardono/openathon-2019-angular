@@ -15,7 +15,7 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private route: Router,
     private adService: AdDataService,
-    public errorService: ErrorServiceMock,
+    public errorService: ErrorService,
     public userService: UserDataService
   ) {}
   title = "open-events-front";

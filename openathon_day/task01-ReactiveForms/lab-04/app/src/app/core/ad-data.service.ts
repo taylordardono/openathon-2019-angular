@@ -16,7 +16,7 @@ export const headers = new HttpHeaders({
 })
 export class AdDataService {
   loadedAds: Array<Ad> = [];
-  constructor(@Inject('ErrorService') private errorService: ErrorService, private http: HttpClient) {}
+  constructor(private errorService: ErrorService, private http: HttpClient) {}
   setAds() {
     this.getAds().subscribe((ads: Ad[]) => {
       this.loadedAds = ads;

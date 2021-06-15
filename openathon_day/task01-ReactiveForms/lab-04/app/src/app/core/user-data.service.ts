@@ -15,7 +15,7 @@ import {ErrorServiceMock} from "./error-mock.service";
 export class UserDataService {
   public isAuthenticated: boolean;
   constructor(
-    private errorService: ErrorServiceMock,
+    private errorService: ErrorService,
     private http: HttpClient,
     private route: Router
   ) {}

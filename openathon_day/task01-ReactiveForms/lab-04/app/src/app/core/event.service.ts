@@ -10,7 +10,7 @@ import {ErrorServiceMock} from "./error-mock.service";
 export class EventService {
   events: Event[];
   activeEvent: boolean;
-  constructor(private errorService: ErrorServiceMock, private http: HttpClient) {}
+  constructor(private errorService: ErrorService, private http: HttpClient) {}
   getEvents(): Observable<any> {
     return this.http
       .get(environment.apiURL + "events", { headers })
