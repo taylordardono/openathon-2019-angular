@@ -1,7 +1,7 @@
-import { Injectable } from "@angular/core";
+import { Inject, Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { ErrorService } from "./error.service";
-import { initializeAd, Ad } from "../models/ad.model";
+import { Ad } from "../models/ad.model";
 import { environment } from "../../environments/environment";
 import { Observable } from "rxjs";
 import { retry, catchError } from "rxjs/operators";
@@ -16,10 +16,17 @@ export const headers = new HttpHeaders({
 })
 export class AdDataService {
   loadedAds: Array<Ad> = [];
-  constructor(private errorService: ErrorService, private http: HttpClient) {}
+  constructor(@Inject('ErrorService') private errorService: ErrorService, private http: HttpClient) {}
+  setAds() {
+    this.getAds().subscribe((ads: Ad[]) => {
+      this.loadedAds = ads;
+      console.log(this.loadedAds);
+    });
+  }
   getAds(): Observable<any> {
+    const url = environment.apiURL + "ads";
     return this.http
-      .get(environment.apiURL + "ads", { headers })
+      .get(url, { headers })
       .pipe(retry(3), catchError(this.errorService.handleError));
   }
 }

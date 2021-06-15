@@ -1,24 +1,21 @@
-import { Injectable } from "@angular/core";
+import { Inject, Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { catchError, retry, map } from "rxjs/operators";
 import { initializeUser, initializeUserNotForm, User } from "../models/user.model";
-import { environment } from "../../environments/environment";
+import { environment, headers } from "../../environments/environment";
 import { ErrorService } from "./error.service";
 import * as bcrypt from "bcryptjs";
+import {ErrorServiceMock} from "./error-mock.service";
 
-//common headers for userService
-export const headers = new HttpHeaders({
-  "Content-Type": "application/json",
-});
 @Injectable({
   providedIn: "root",
 })
 export class UserDataService {
   public isAuthenticated: boolean;
   constructor(
-    private errorService: ErrorService,
+    private errorService: ErrorServiceMock,
     private http: HttpClient,
     private route: Router
   ) {}

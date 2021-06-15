@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Event } from "../../models/event.model";
 import { EventService } from "../../core/event.service";
+import { ErrorService } from "../../core/error.service";
 import { oeventsAnimations } from "src/app/shared/animations/animations";
 import { Router } from "@angular/router";
 
@@ -12,9 +13,18 @@ import { Router } from "@angular/router";
 })
 export class EventListComponent implements OnInit, OnDestroy {
   events: Event[];
-  constructor(private route: Router, private eventService: EventService) {}
+  selectedCreator: any;
+  constructor(
+    private route: Router,
+    private eventService: EventService,
+    private errorService: ErrorService
+  ) {}
   ngOnInit() {
     this.eventService.activeEvent = true;
+    this.errorService.getCopyrightsBack(3).subscribe((copyright: any) => {
+      this.selectedCreator = copyright[0];
+      console.log(this.selectedCreator);
+    });
     this.getEvents();
   }
 

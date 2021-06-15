@@ -1,14 +1,14 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { LoginComponent } from './login.component';
-import { SharedModule } from '../shared/shared.module';
-import { SignupComponent } from './signup/signup.component';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+
+import { CommonModule } from "@angular/common";
+import { SharedModule } from "../shared/shared.module";
+
+import { LoginComponent } from "./login.component";
+import { SignupComponent } from "./signup/signup.component";
 
 @NgModule({
   declarations: [LoginComponent, SignupComponent],
-  imports: [
-    CommonModule,
-    SharedModule
-  ]
+  imports: [CommonModule, SharedModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class LoginModule { }
+export class LoginModule {}

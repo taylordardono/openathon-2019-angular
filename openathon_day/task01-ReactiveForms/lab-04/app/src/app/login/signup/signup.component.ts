@@ -12,7 +12,8 @@ import { PasswordValidatorDirective } from "src/app/directives/password-validato
   selector: "oevents-signup",
   templateUrl: "./signup.component.html",
   styleUrls: ["./signup.component.scss"],
-  animations: [oeventsAnimations.headerIn]
+  animations: [oeventsAnimations.headerIn],
+  providers: [PasswordValidatorDirective],
 })
 export class SignupComponent implements OnInit, OnDestroy {
   showPass: boolean;
@@ -20,6 +21,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   signUpForm: FormGroup;
   formChanges: Subscription;
   signUpFormErr: Profile;
+  selectedCreator: any;
   constructor(
     private passValidator: PasswordValidatorDirective,
     public errorService: ErrorService,
@@ -87,7 +89,13 @@ export class SignupComponent implements OnInit, OnDestroy {
     this.iconShow = "visibility";
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.errorService.getCopyrightsBack(2).subscribe((copyright: any) => {
+      this.selectedCreator = copyright[0];
+      console.log(this.selectedCreator);
+    });
+  }
+
   //Avoid the memory leak from the valueChanges of the form
   ngOnDestroy() {
     if (this.formChanges) {

@@ -1,0 +1,8 @@
+<p *ngIf="creator" class="copyright">
+  <mat-icon data-copyright>copyright</mat-icon>
+  Photo by
+  <a [href]="creator.userRef">{{ creator.user }}</a>
+  on
+  <a [href]="creator.webSource">Unsplash</a>
+</p>
+<ng-content select="square-from"></ng-content>

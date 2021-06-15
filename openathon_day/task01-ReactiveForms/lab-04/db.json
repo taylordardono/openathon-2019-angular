@@ -17,7 +17,7 @@
     "description": "Ready for taking your programmer skills to the next level?",
     "id": 31
   }
-],
+  ],
   "events": [
     {
       "id": "0",
@@ -127,5 +127,31 @@
       "password": "$2a$10$WBkqULGYv1kibr8oFcDjq.gBS2T2ywTXeWClna9X1F0AKB6QOV/i2",
       "id": 2
     }
-  ]
+  ],
+  "copyrights": [
+    {
+      "user": "Joel Filipe",
+      "userRef": "https://unsplash.com/@joelfilip?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText",
+      "webSource": "https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText",
+      "id": 1
+    },
+    {
+      "user": "He Junhui",
+      "userRef": "https://unsplash.com/@he_junhui?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText",
+      "webSource": "https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText",
+      "id": 2
+    },
+    {
+      "user": "Jason Wong",
+      "userRef": "https://unsplash.com/@jasonhk1920?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText",
+      "webSource": "https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText",
+      "id": 3
+    },
+    {
+      "user": "Denise Jans",
+      "userRef": "https://unsplash.com/@dmjdenise?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText",
+      "webSource": "https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText",
+      "id": 4
+    }
+    ]
 }

@@ -1,0 +1,20 @@
+@import "../shared/styles/colors.scss";
+
+.copyright {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    color: $gray-white;
+    margin: 0;
+    a {
+      color: rgba($color: $black, $alpha: 1);
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  mat-icon[data-copyright] {
+    font-size: 1rem;
+  }

@@ -1,4 +1,4 @@
-import { Component, HostBinding, HostListener, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { EventService } from "../core/event.service";
 import { UserDataService } from "../core/user-data.service";
 

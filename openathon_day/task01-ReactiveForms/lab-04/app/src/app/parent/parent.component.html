@@ -1,0 +1,10 @@
+<oevents-child
+  #childTemplate
+  mat-raised-button
+  color="primary"
+  (eventSent)="printEvent($event)"
+>
+  <button-child>Button1</button-child>
+</oevents-child>
+<button on-click="clickChild()" mat-raised-button color="primary">Child</button>
+<oevents-copyright [creator]="null"></oevents-copyright>

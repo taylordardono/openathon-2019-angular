@@ -18,6 +18,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
   public editorForm: FormGroup;
   public editorFormErr: User;
   private editorChanges: Subscription;
+  selectedCreator: any = {
+    user: "User",
+    userRef: "",
+    webSource: "",
+  };
   constructor(
     private errorService: ErrorService,
     private userService: UserDataService
@@ -90,7 +95,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.errorService.getCopyrightsBack(1).subscribe((copyright: any) => {
+      this.selectedCreator = copyright[0];
+      console.log(this.selectedCreator);
+    });
+  }
+
   //Avoid the memory leak from the valueChanges of the form
   ngOnDestroy() {
     if (this.editorChanges) {

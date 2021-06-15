@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 
 //Angular material
@@ -16,8 +16,14 @@ import { ReactiveFormsModule } from "@angular/forms";
 //Directives
 import { PasswordValidatorDirective } from "../directives/password-validator.directive";
 import { DynamicComponentDirective } from "../directives/dynamic-component.directive";
+//Components
+import { CopyrightComponent } from "../copyright/copyright.component";
 @NgModule({
-  declarations: [PasswordValidatorDirective, DynamicComponentDirective],
+  declarations: [
+    CopyrightComponent,
+    PasswordValidatorDirective,
+    DynamicComponentDirective,
+  ],
   imports: [
     CommonModule,
     MatToolbarModule,
@@ -33,6 +39,7 @@ import { DynamicComponentDirective } from "../directives/dynamic-component.direc
     ReactiveFormsModule,
   ],
   exports: [
+    CopyrightComponent,
     CommonModule,
     MatToolbarModule,
     MatButtonModule,

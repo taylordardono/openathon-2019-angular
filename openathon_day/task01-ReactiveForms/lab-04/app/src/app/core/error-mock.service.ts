@@ -1,17 +1,19 @@
 import { Injectable } from "@angular/core";
-import { HttpErrorResponse, HttpClient } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Observable, throwError } from "rxjs";
 import { retry, map, catchError } from "rxjs/operators";
 import { environment, headers } from "../../environments/environment";
+
 @Injectable()
-export class ErrorService {
+export class ErrorServiceMock {
   errorBoolean: boolean;
   successBoolean: boolean;
   message: String;
   onPetition: boolean;
   copyrightsArray: Array<any> = new Array();
   selectedCreator: any;
-  constructor(private http: HttpClient) {}
+  http: HttpClient;
+  constructor() {}
 
   resetActionStateValues() {
     this.errorBoolean = false;
@@ -19,34 +21,13 @@ export class ErrorService {
     this.message = "";
   }
 
-  // async selectCreator(index): Promise<any> {
-  //   return new Promise((reject, resolve) => {
-  //     if (this.copyrightsArray.length === 0) {
-  //       this.setCopyRights(index);
-  //     }
-  //     resolve(this.copyrightsArray[index]);
-  //   });
-  // }
-
-  // setCopyRights(index?): any {
-  //   this.getCopyrightsBack(index)
-  //     .subscribe((copyright: any) => {
-  //       console.log(copyright);
-  //       this.selectedCreator = copyright[0];
-  //       console.log(this.selectedCreator);
-  //     })
-  //     .add(() => {
-  //       return this.selectedCreator;
-  //     });
-  // }
-
   getCopyrightsBack(index?): Observable<any> {
     const url = environment.apiURL + "copyrights";
     return this.http.get(url, { headers }).pipe(
       retry(3),
       map((creators: Array<any>) => {
-        return creators.filter((creator) => {
-          if (creator.id === index) {
+        return creators.filter((creator, ind) => {
+          if (ind === 3) {
             return creator;
           }
         });

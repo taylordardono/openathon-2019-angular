@@ -9,6 +9,8 @@ import { SignupComponent } from "./login/signup/signup.component";
 
 // Guards
 import { EventsGuardGuard } from "./core/events-guard.guard";
+import { ParentComponent } from "./parent/parent.component";
+import { CopyrightComponent } from "./copyright/copyright.component";
 
 const routes: Routes = [
   { path: "home", component: LandingPageComponent },
@@ -22,9 +24,13 @@ const routes: Routes = [
     path: "profile",
     component: ProfileComponent,
   },
+  {
+    path: "c",
+    component: CopyrightComponent,
+  },
   { path: "login", component: LoginComponent },
   { path: "signup", component: SignupComponent },
-
+  { path: "parent", component: ParentComponent },
   { path: "", redirectTo: "/home", pathMatch: "full" },
   { path: "**", component: PageNotFoundComponent },
 ];

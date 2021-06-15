@@ -1,22 +1,16 @@
-import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Inject, Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { catchError, retry, map } from "rxjs/operators";
-import { environment } from "../../environments/environment";
+import { environment, headers } from "../../environments/environment";
 import { initializeEvent, Event } from "../models/event.model";
 import { ErrorService } from "./error.service";
-
-//common headers for eventService
-export const headers = new HttpHeaders({
-  "Content-Type": "application/json",
-});
-@Injectable({
-  providedIn: "root",
-})
+import {ErrorServiceMock} from "./error-mock.service";
+@Injectable()
 export class EventService {
   events: Event[];
   activeEvent: boolean;
-  constructor(private errorService: ErrorService, private http: HttpClient) {}
+  constructor(private errorService: ErrorServiceMock, private http: HttpClient) {}
   getEvents(): Observable<any> {
     return this.http
       .get(environment.apiURL + "events", { headers })

@@ -67,7 +67,11 @@ export class LoginComponent implements OnInit, OnDestroy {
       name: this.loginForm.get("name").value,
       password: this.loginForm.get("password").value,
     });
-    this.loginForm.get("password").reset("");
+    //Clean up the password input, content and validators
+    console.log(this.loginForm.get("password"));
+    this.loginForm.get("password").clearValidators();
+    console.log(this.loginForm.get("password"));
+    this.loginForm.get("password").reset();
   }
 
   ngOnInit() {}

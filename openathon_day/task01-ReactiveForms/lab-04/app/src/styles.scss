@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "@angular/material/prebuilt-themes/indigo-pink.css";
+// @import "@angular/material/prebuilt-themes/pink-bluegrey.css";
 @import "./app/shared/styles/fonts.scss";
 @import "./app/shared/styles/colors.scss";
 @import "./app/shared/styles/variables.scss";
@@ -59,10 +60,6 @@ mat-icon[data-petition] {
   animation-duration: 1s;
   animation-iteration-count: infinite;
   animation-timing-function: cubic-bezier(0.5, 0.5, 0.5, 0.5);
-}
-
-mat-icon[data-copyright] {
-  font-size: 1rem;
 }
 
 oevents-error-card {
@@ -138,21 +135,6 @@ button[mat-raised-button] {
   display: block;
   background-color: rgba($color: $acn-green, $alpha: 1);
   color: rgba($color: $gray-white, $alpha: 1);
-}
-
-.copyright {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  color: $gray-white;
-  margin: 0;
-  a {
-    color: rgba($color: $black, $alpha: 1);
-    text-decoration: none;
-    &:hover {
-      text-decoration: underline;
-    }
-  }
 }
 
 div.mat-card-header-text {
